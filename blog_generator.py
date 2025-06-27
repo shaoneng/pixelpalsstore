@@ -26,7 +26,7 @@ def generate_blog_from_keyword(keyword: str, prompt_template: str) -> dict:
     raw_response_text = "" # 用於在出錯時顯示原始回傳
     try:
         genai.configure(api_key=GEMINI_API_KEY)
-        model = genai.GenerativeModel('gemini-1.5-flash')
+        model = genai.GenerativeModel('gemini-2.5-pro')
         prompt = prompt_template.format(keyword=keyword)
         
         response = model.generate_content(prompt)
