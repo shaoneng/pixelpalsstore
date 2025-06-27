@@ -128,141 +128,134 @@
     </footer>
 
     <script>
-        const translations = {
-            'en': {
-                navBlog: 'Blog',
-                pageTitle: 'Health & Fitness Blog',
-                pageSubtitle: 'Your guide to a healthier, more active lifestyle.',
-                by: 'By',
-                readMore: 'Read More &rarr;',
-                post1Title: '5 Common Weight Loss Myths Debunked',
-                post1Summary: 'Navigating the world of weight loss can be confusing with so much conflicting information. We\'re here to clear up some of the most persistent myths, from "carbs make you fat" to "you must do hours of cardio"...',
-                post2Title: 'How to Calculate Your Calorie Needs for Sustainable Weight Loss',
-                post2Summary: 'Understanding your Total Daily Energy Expenditure (TDEE) is the first step toward creating a calorie deficit that works for you. This guide will walk you through the simple steps to estimate your needs...',
-                post3Title: 'The Importance of Strength Training in Your Fitness Journey',
-                post3Summary: 'While cardio is great for your heart, strength training is crucial for building muscle, boosting metabolism, and creating a toned physique. Discover why lifting weights is for everyone, not just bodybuilders...',
-                footer: '&copy; 2025 Your Website Name. All Rights Reserved.'
-            },
-            'zh-TW': {
-                navBlog: '部落格',
-                pageTitle: '健康與健身部落格',
-                pageSubtitle: '您通往更健康、更活躍生活方式的指南。',
-                by: '作者：',
-                readMore: '閱讀更多 &rarr;',
-                post1Title: '破解 5 個常見的減重迷思',
-                post1Summary: '減重的世界充滿了矛盾的資訊，常常讓人感到困惑。我們在這裡為您澄清一些最頑固的迷思，從「碳水化合物會讓你變胖」到「你必須做好幾個小時的有氧運動」...',
-                post2Title: '如何計算實現可持續減重的卡路里需求',
-                post2Summary: '了解您的每日總能量消耗（TDEE）是建立有效熱量赤字的第一步。本指南將引導您完成估算需求的簡單步驟...',
-                post3Title: '肌力訓練在您健身旅程中的重要性',
-                post3Summary: '有氧運動對心臟有益，但肌力訓練對於增肌、促進新陳代謝和塑造健美體態至關重要。了解為什麼舉重適合每個人，而不僅僅是健美運動員...',
-                footer: '&copy; 2025 您的網站名稱. 版權所有.'
-            },
-            'es': {
-                navBlog: 'Blog',
-                pageTitle: 'Blog de Salud y Fitness',
-                pageSubtitle: 'Su guía para un estilo de vida más saludable y activo.',
-                by: 'Por',
-                readMore: 'Leer Más &rarr;',
-                post1Title: '5 Mitos Comunes sobre la Pérdida de Peso Desmentidos',
-                post1Summary: 'Navegar por el mundo de la pérdida de peso puede ser confuso. Estamos aquí para aclarar algunos de los mitos más persistentes, desde "los carbohidratos engordan" hasta "debes hacer horas de cardio"...',
-                post2Title: 'Cómo Calcular sus Necesidades Calóricas para una Pérdida de Peso Sostenible',
-                post2Summary: 'Comprender su Gasto Energético Diario Total (TDEE) es el primer paso para crear un déficit calórico que funcione para usted. Esta guía le mostrará los pasos para estimar sus necesidades...',
-                post3Title: 'La Importancia del Entrenamiento de Fuerza en su Viaje de Fitness',
-                post3Summary: 'Mientras que el cardio es excelente para su corazón, el entrenamiento de fuerza es crucial para desarrollar músculo, impulsar el metabolismo y crear un físico tonificado. Descubra por qué levantar pesas es para todos...',
-                footer: '&copy; 2025 Su Nombre de Sitio Web. Todos los derechos reservados.'
-            },
-            'fr': {
-                navBlog: 'Blog',
-                pageTitle: 'Blog sur la Santé et le Fitness',
-                pageSubtitle: 'Votre guide pour un mode de vie plus sain et plus actif.',
-                by: 'Par',
-                readMore: 'Lire la Suite &rarr;',
-                post1Title: '5 Mythes Courants sur la Perte de Poids Démystifiés',
-                post1Summary: 'Naviguer dans le monde de la perte de poids peut être déroutant. Nous sommes là pour clarifier certains des mythes les plus persistants, de "les glucides font grossir" à "il faut faire des heures de cardio"...',
-                post2Title: 'Comment Calculer Vos Besoins Caloriques pour une Perte de Poids Durable',
-                post2Summary: 'Comprender votre Dépense Énergétique Journalière Totale (DEJT) est la première étape pour créer un déficit calorique qui vous convient. Ce guide vous expliquera les étapes simples pour estimer vos besoins...',
-                post3Title: 'L\'Importance de la Musculation dans Votre Parcours de Fitness',
-                post3Summary: 'Alors que le cardio est excellent pour votre cœur, la musculation est cruciale pour développer les muscles, stimuler le métabolisme et créer un physique tonique. Découvrez pourquoi soulever des poids est pour tout le monde...',
-                footer: '&copy; 2025 Votre Nom de Site Web. Tous droits réservés.'
-            },
-            'ru': {
-                navBlog: 'Блог',
-                pageTitle: 'Блог о Здоровье и Фитнесе',
-                pageSubtitle: 'Ваш гид к более здоровому и активному образу жизни.',
-                by: 'Автор:',
-                readMore: 'Читать Далее &rarr;',
-                post1Title: '5 Распространенных Мифов о Потере Веса: Разоблачение',
-                post1Summary: 'Мир похудения может сбивать с толку. Мы здесь, чтобы развеять некоторые из самых стойких мифов, от «углеводы полнят» до «нужно делать часы кардио»...',
-                post2Title: 'Как Рассчитать Потребность в Калориях для Устойчивой Потери Веса',
-                post2Summary: 'Понимание вашего общего суточного расхода энергии (TDEE) — это первый шаг к созданию работающего дефицита калорий. Это руководство проведет вас через простые шаги для оценки ваших потребностей...',
-                post3Title: 'Важность Силовых Тренировок в Вашем Фитнес-Путешествии',
-                post3Summary: 'Хотя кардио отлично подходит для вашего сердца, силовые тренировки имеют решающее значение для наращивания мышечной массы, ускорения метаболизма и создания подтянутого телосложения. Узнайте, почему поднятие тяжестей для всех...',
-                footer: '&copy; 2025 Название Вашего Сайта. Все права защищены.'
-            }
-        };
-
-        let currentLang = 'en';
-
-        // --- NEW: Function to update links with language parameter ---
-        function updateAllLinks(lang) {
-            // Selects all internal links
-            document.querySelectorAll('a[href^="index.html"], a[href^="blog.html"], a[href^="blog-post-1.html"]').forEach(link => {
-                // Safely create a URL object to manipulate the search parameters
-                let url = new URL(link.href, window.location.origin);
-                url.searchParams.set('lang', lang);
-                link.href = url.pathname + url.search;
-            });
+    const translations = {
+        'en': {
+            navBlog: 'Blog',
+            pageTitle: 'Health & Fitness Blog',
+            pageSubtitle: 'Your guide to a healthier, more active lifestyle.',
+            by: 'By',
+            readMore: 'Read More &rarr;',
+            post1Title: '5 Common Weight Loss Myths Debunked',
+            post1Summary: 'Navigating the world of weight loss can be confusing with so much conflicting information. We\'re here to clear up some of the most persistent myths, from "carbs make you fat" to "you must do hours of cardio"...',
+            post2Title: 'How to Calculate Your Calorie Needs for Sustainable Weight Loss',
+            post2Summary: 'Understanding your Total Daily Energy Expenditure (TDEE) is the first step toward creating a calorie deficit that works for you. This guide will walk you through the simple steps to estimate your needs...',
+            post3Title: 'The Importance of Strength Training in Your Fitness Journey',
+            post3Summary: 'While cardio is great for your heart, strength training is crucial for building muscle, boosting metabolism, and creating a toned physique. Discover why lifting weights is for everyone, not just bodybuilders...',
+            footer: '&copy; 2025 Your Website Name. All Rights Reserved.'
+        },
+        'zh-TW': {
+            navBlog: '部落格',
+            pageTitle: '健康與健身部落格',
+            pageSubtitle: '您通往更健康、更活躍生活方式的指南。',
+            by: '作者：',
+            readMore: '閱讀更多 &rarr;',
+            post1Title: '破解 5 個常見的減重迷思',
+            post1Summary: '減重的世界充滿了矛盾的資訊，常常讓人感到困惑。我們在這裡為您澄清一些最頑固的迷思，從「碳水化合物會讓你變胖」到「你必須做好幾個小時的有氧運動」...',
+            post2Title: '如何計算實現可持續減重的卡路里需求',
+            post2Summary: '了解您的每日總能量消耗（TDEE）是建立有效熱量赤字的第一步。本指南將引導您完成估算需求的簡單步驟...',
+            post3Title: '肌力訓練在您健身旅程中的重要性',
+            post3Summary: '有氧運動對心臟有益，但肌力訓練對於增肌、促進新陳代謝和塑造健美體態至關重要。了解為什麼舉重適合每個人，而不僅僅是健美運動員...',
+            footer: '&copy; 2025 您的網站名稱. 版權所有.'
+        },
+        'es': {
+            navBlog: 'Blog',
+            pageTitle: 'Blog de Salud y Fitness',
+            pageSubtitle: 'Su guía para un estilo de vida más saludable y activo.',
+            by: 'Por',
+            readMore: 'Leer Más &rarr;',
+            post1Title: '5 Mitos Comunes sobre la Pérdida de Peso Desmentidos',
+            post1Summary: 'Navegar por el mundo de la pérdida de peso puede ser confuso. Estamos aquí para aclarar algunos de los mitos más persistentes, desde "los carbohidratos engordan" hasta "debes hacer horas de cardio"...',
+            post2Title: 'Cómo Calcular sus Necesidades Calóricas para una Pérdida de Peso Sostenible',
+            post2Summary: 'Comprender su Gasto Energético Diario Total (TDEE) es el primer paso para crear un déficit calórico que funcione para usted. Esta guía le mostrará los pasos para estimar sus necesidades...',
+            post3Title: 'La Importancia del Entrenamiento de Fuerza en su Viaje de Fitness',
+            post3Summary: 'Mientras que el cardio es excelente para su corazón, el entrenamiento de fuerza es crucial para desarrollar músculo, impulsar el metabolismo y crear un físico tonificado. Descubra por qué levantar pesas es para todos...',
+            footer: '&copy; 2025 Su Nombre de Sitio Web. Todos los derechos reservados.'
+        },
+        'fr': {
+            navBlog: 'Blog',
+            pageTitle: 'Blog sur la Santé et le Fitness',
+            pageSubtitle: 'Votre guide pour un mode de vie plus sain et plus actif.',
+            by: 'Par',
+            readMore: 'Lire la Suite &rarr;',
+            post1Title: '5 Mythes Courants sur la Perte de Poids Démystifiés',
+            post1Summary: 'Naviguer dans le monde de la perte de poids peut être déroutant. Nous sommes là pour clarifier certains des mythes les plus persistants, de "les glucides font grossir" à "il faut faire des heures de cardio"...',
+            post2Title: 'Comment Calculer Vos Besoins Caloriques pour une Perte de Poids Durable',
+            post2Summary: 'Comprender votre Dépense Énergétique Journalière Totale (DEJT) est la première étape pour créer un déficit calorique qui vous convient. Ce guide vous expliquera les étapes simples pour estimer vos besoins...',
+            post3Title: 'L\'Importance de la Musculation dans Votre Parcours de Fitness',
+            post3Summary: 'Alors que le cardio est excellent pour votre cœur, la musculation est cruciale pour développer les muscles, stimuler le métabolisme et créer un physique tonique. Découvrez pourquoi soulever des poids est pour tout le monde...',
+            footer: '&copy; 2025 Votre Nom de Site Web. Tous droits réservés.'
+        },
+        'ru': {
+            navBlog: 'Блог',
+            pageTitle: 'Блог о Здоровье и Фитнесе',
+            pageSubtitle: 'Ваш гид к более здоровому и активному образу жизни.',
+            by: 'Автор:',
+            readMore: 'Читать Далее &rarr;',
+            post1Title: '5 Распространенных Мифов о Потере Веса: Разоблачение',
+            post1Summary: 'Мир похудения может сбивать с толку. Мы здесь, чтобы развеять некоторые из самых стойких мифов, от «углеводы полнят» до «нужно делать часы кардио»...',
+            post2Title: 'Как Рассчитать Потребность в Калориях для Устойчивой Потери Веса',
+            post2Summary: 'Понимание вашего общего суточного расхода энергии (TDEE) — это первый шаг к созданию работающего дефицита калорий. Это руководство проведет вас через простые шаги для оценки ваших потребностей...',
+            post3Title: 'Важность Силовых Тренировок в Вашем Фитнес-Путешествии',
+            post3Summary: 'Хотя кардио отлично подходит для вашего сердца, силовые тренировки имеют решающее значение для наращивания мышечной массы, ускорения метаболизма и создания подтянутого телосложения. Узнайте, почему поднятие тяжестей для всех...',
+            footer: '&copy; 2025 Название Вашего Сайта. Все права защищены.'
         }
+    };
 
-        function setLanguage(lang) {
-            if (!translations[lang]) return;
-            currentLang = lang;
-            const langData = translations[lang];
+    let currentLang = 'en';
 
-            // Set the lang attribute on the HTML tag for SEO and accessibility
-            document.documentElement.lang = lang;
-            
-            // Translate all elements on the page
-            document.querySelectorAll('[data-translate-key]').forEach(el => {
-                const key = el.getAttribute('data-translate-key');
-                if (langData[key] !== undefined) {
-                    el.innerHTML = langData[key];
-                }
-            });
-
-            // --- NEW: Update links every time language is changed ---
-            updateAllLinks(lang);
-        }
-
-        // --- UPDATED: Page load logic ---
-        window.addEventListener('DOMContentLoaded', () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const langFromUrl = urlParams.get('lang');
-            const supportedLangsMap = {'en': 'en', 'zh-TW': 'zh-TW', 'es': 'es', 'fr': 'fr', 'ru': 'ru'};
-            let initialLang = 'en'; // Default to English
-
-            // Priority 1: Use the language from the URL parameter if it's valid
-            if (langFromUrl && supportedLangsMap[langFromUrl]) {
-                initialLang = langFromUrl;
-            } else {
-                // Priority 2: Fallback to browser's language if no valid URL parameter
-                const browserLang = (navigator.language || navigator.userLanguage);
-                if (browserLang.startsWith('zh')) {
-                    initialLang = 'zh-TW';
-                } else {
-                    const langCode = browserLang.split('-')[0];
-                    if (supportedLangsMap[langCode]) {
-                        initialLang = langCode;
-                    }
-                }
-            }
-            
-            // Set the dropdown to the correct language
-            document.getElementById('language-selector').value = initialLang;
-            
-            // Set the initial language for the page
-            setLanguage(initialLang);
+    function updateAllLinks(lang) {
+        document.querySelectorAll('a[href^="index.html"], a[href^="blog.html"], a[href^="blog-post-1.html"]').forEach(link => {
+            let url = new URL(link.href, window.location.origin);
+            url.searchParams.set('lang', lang);
+            link.href = url.pathname + url.search;
         });
-    </script>
+    }
+
+    function setLanguage(lang) {
+        if (!translations[lang]) return;
+        currentLang = lang;
+        localStorage.setItem('language', lang); // Save language to localStorage
+        const langData = translations[lang];
+
+        document.documentElement.lang = lang;
+        
+        document.querySelectorAll('[data-translate-key]').forEach(el => {
+            const key = el.getAttribute('data-translate-key');
+            if (langData[key] !== undefined) {
+                el.innerHTML = langData[key];
+            }
+        });
+
+        updateAllLinks(lang); // Update links on language change
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const langFromUrl = urlParams.get('lang');
+        const savedLang = localStorage.getItem('language');
+        const browserLang = (navigator.language || navigator.userLanguage);
+        const supportedLangsMap = {'en': 'en', 'zh-TW': 'zh-TW', 'es': 'es', 'fr': 'fr', 'ru': 'ru'};
+        
+        let initialLang = 'en'; // Default
+
+        if (langFromUrl && supportedLangsMap[langFromUrl]) {
+            initialLang = langFromUrl;
+        } else if (savedLang && supportedLangsMap[savedLang]) {
+            initialLang = savedLang;
+        } else {
+            if (browserLang.startsWith('zh')) {
+                initialLang = 'zh-TW';
+            } else {
+                const langCode = browserLang.split('-')[0];
+                if (supportedLangsMap[langCode]) {
+                    initialLang = langCode;
+                }
+            }
+        }
+        
+        document.getElementById('language-selector').value = initialLang;
+        setLanguage(initialLang);
+    });
+</script>
 </body>
 </html>
