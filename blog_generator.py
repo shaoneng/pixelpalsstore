@@ -36,7 +36,7 @@ def generate_blog_from_keyword(keyword: str, prompt_template: str) -> dict:
 
             # (修正) 使用有效的模型名稱，並加入安全設定，避免因內容審核被阻擋
             model = genai.GenerativeModel(
-                model_name='gemini-1.5-flash-latest',
+                model_name='gemini-2.5-flash',
                 safety_settings={
                     'HARM_CATEGORY_HARASSMENT': 'BLOCK_NONE',
                     'HARM_CATEGORY_HATE_SPEECH': 'BLOCK_NONE',
