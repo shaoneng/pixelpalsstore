@@ -184,16 +184,16 @@
     </div>
 
     <!-- JavaScript for Calculator Logic and i18n -->
-    <script>
+   <script>
         const translations = {
             'en': {
                 navBlog: 'Blog', title: 'Weight-Loss Percentage Calculator', subtitle: 'Track your progress in seconds. See how far you’ve come on your journey.', unitLabel: 'Measurement Unit', unitKg: 'Kilograms (kg)', unitLb: 'Pounds (lb)', startWeightLabel: 'Start Weight', startWeightPlaceholder: 'e.g., 80', currentWeightLabel: 'Current Weight', currentWeightPlaceholder: 'e.g., 75', calculateBtn: 'Calculate Progress', resultPlaceholder: 'Your result will appear here', howItWorksTitle: 'How This Tool Works', howItWorksDesc: "This tool calculates the percentage of weight you've lost relative to your starting weight. Simply select your preferred unit (kilograms or pounds), enter your starting and current weights into the designated fields, and click the 'Calculate' button. The result gives you a clear, motivational percentage of your progress, helping you stay focused on your health and fitness goals.", faqTitle: 'Frequently Asked Questions', faq1_q: 'How do you calculate weight loss percentage?', faq1_a: 'The formula is: $$ \\text{Percentage Loss} = \\frac{(\\text{Start Weight} - \\text{Current Weight})}{\\text{Start Weight}} \\times 100 $$ Our calculator automates this math for you.', faq2_q: 'Is this weight loss calculator free to use?', faq2_a: 'Yes, this tool is 100% free to use. There are no hidden fees or subscriptions required. Our goal is to provide a simple, accessible tool to support your wellness journey.', faq3_q: 'Why is tracking weight loss percentage useful?', faq3_a: 'Tracking your weight loss as a percentage provides a consistent and motivational measure of progress, regardless of your starting weight. A 5kg loss is more significant for someone starting at 70kg than for someone at 120kg. The percentage contextualizes your achievements.', disclaimerTitle: 'Medical Disclaimer', disclaimerDesc: 'This tool is for informational purposes only and does not constitute medical advice. Weight loss goals and programs should be discussed with a qualified healthcare professional. Always consult your doctor or a registered dietitian before making significant changes to your diet or exercise routine.', footer: '&copy; 2025 Your Website Name. All Rights Reserved.', errorMsg: 'Please enter valid, positive numbers for both weights.', warningMsg: (gain, unit) => `You've gained ${gain} ${unit}. Focus on your next step!`, successMsg: (percentage) => `<span class="block text-base text-green-800">Congratulations! You've lost:</span><span class="block text-4xl font-bold text-green-600 my-2">${percentage}%</span><span class="block text-base text-green-800">of your starting weight. Keep it up! 🎉</span>`
             },
             'zh-TW': {
-                navBlog: '部落格', title: '減重百分比計算機', subtitle: '只需幾秒鐘即可追蹤您的進度，看看您在減重旅程上走了多遠。', unitLabel: '測量單位', unitKg: '公斤 (kg)', unitLb: '磅 (lb)', startWeightLabel: '開始時體重', startWeightPlaceholder: '例如：80', currentWeightLabel: '目前體重', currentWeightPlaceholder: '例如：75', calculateBtn: '計算進度', resultPlaceholder: '計算結果將顯示在此處', howItWorksTitle: '本工具如何運作', howItWorksDesc: '本工具可計算您相對於起始體重的減重百分比。只需選擇您偏好的單位（公斤或磅），在指定欄位中輸入您的起始和目前體重，然後點擊「計算進度」按鈕。結果將提供您一個清晰、激勵人心的進度百分比，幫助您專注於您的健康與健身目標。', faqTitle: '常見問題', faq1_q: '如何計算減重百分比？', faq1_a: '計算公式為：$$ \\text{減重百分比} = \\frac{(\\text{起始體重} - \\text{目前體重})}{\\text{起始體重}} \\times 100 $$ 我們的計算機會為您自動完成此計算。', faq2_q: '這個減重計算機是免費的嗎？', faq2_a: '是的，本工具 100% 免費使用。沒有任何隱藏費用或訂閱要求。我們的目標是提供簡單易用的工具，以支持您的健康之旅。', faq3_q: '為什麼追蹤減重百分比很有用？', faq3_a: '無論您的起始體重是多少，以百分比追蹤您的減重情況可提供一個更一致且激勵人心的進度衡量標準。對於起始體重為 70 公斤的人來說，減重 5 公斤比起始體重為 120 公斤的人更為顯著。百分比能將您的成就脈絡化。', disclaimerTitle: '醫療免責聲明', disclaimerDesc: '本工具僅供參考，不構成醫療建議。減重目標和計畫應與合格的醫療保健專業人員討論。在對您的飲食或運動習慣進行重大改變之前，請務必諮詢您的醫生或註冊營養師。', footer: '&copy; 2025 您的網站名稱. 版權所有.', errorMsg: '請為起始和目前體重輸入有效的正數。', warningMsg: (gain, unit) => `您的體重增加了 ${gain} ${unit}。專注於您的下一步！`, successMsg: (percentage) => `<span class="block text-base text-green-800">恭喜！您已減去：</span><span class="block text-4xl font-bold text-green-600 my-2">${percentage}%</span><span class="block text-base text-green-800">的起始體重。繼續保持！ 🎉</span>`
+                navBlog: '部落格', title: '減重百分比計算機', subtitle: '只需幾秒鐘即可追蹤您的進度，看看您在減重旅程上走了多遠。', unitLabel: '測量單位', unitKg: '公斤 (kg)', unitLb: '磅 (lb)', startWeightLabel: '開始時體重', startWeightPlaceholder: '例如：80', currentWeightLabel: '目前體重', currentWeightPlaceholder: '例如：75', calculateBtn: '計算進度', resultPlaceholder: '計算結果將顯示在此處', howItWorksTitle: '本工具如何運作', howItWorksDesc: '本工具可計算您相對於起始體重的減重百分比。只需選擇您偏好的單位（公斤或磅），在指定欄位中輸入您的起始和目前體重，然後點擊「計算進度」按鈕。結果將提供您一個清晰、激勵人心的進度百分比，幫助您專注於您的健康與健身目標。', faqTitle: '常見問題', faq1_q: '如何計算減重百分比？', faq1_a: '計算公式為：$$ \\text{減重百分比} = \\frac{(\\text{起始體重} - \\text{目前體重})}{\\text{起始體重}} \\times 100 $$ 我們的計算機會為您自動完成此計算。', faq2_q: '這個減重計算機是免費的嗎？', faq2_a: '是的，本工具 100% 免費使用。沒有任何隱藏費用或訂閱要求。我們的目標是提供簡單易用的工具，以支持您的健康之旅。', faq3_q: '為什麼追蹤減重百分比很有用？', faq3_a: '無論您的起始體重是多少，以百分比追蹤您的減重情況可提供一個更一致且激勵人心的進度衡量標準。對於起始體重為 70 公斤的人來說，減重 5 公斤比起始體重為 120 公斤的人更為顯著。百分比能將您的成就脈絡化。', disclaimerTitle: '醫療免責聲明', disclaimerDesc: '本工具僅供參考，不構成醫療建議。減重目標和計畫應與合格的醫療保健專業人員討論。在對您的飲食或運動習慣進行重大改變之前，請務務必諮詢您的醫生或註冊營養師。', footer: '&copy; 2025 您的網站名稱. 版權所有.', errorMsg: '請為起始和目前體重輸入有效的正數。', warningMsg: (gain, unit) => `您的體重增加了 ${gain} ${unit}。專注於您的下一步！`, successMsg: (percentage) => `<span class="block text-base text-green-800">恭喜！您已減去：</span><span class="block text-4xl font-bold text-green-600 my-2">${percentage}%</span><span class="block text-base text-green-800">的起始體重。繼續保持！ 🎉</span>`
             },
             'es': {
-                navBlog: 'Blog', title: 'Calculadora de Porcentaje de Pérdida de Peso', subtitle: 'Siga su progreso en segundos. Vea lo lejos que ha llegado en su viaje.', unitLabel: 'Unidad de Medida', unitKg: 'Kilogramos (kg)', unitLb: 'Libras (lb)', startWeightLabel: 'Peso Inicial', startWeightPlaceholder: 'p. ej., 80', currentWeightLabel: 'Peso Actual', currentWeightPlaceholder: 'p. ej., 75', calculateBtn: 'Calcular Progreso', resultPlaceholder: 'Su resultado aparecerá aquí', howItWorksTitle: 'Cómo Funciona Esta Herramienta', howItWorksDesc: 'Esta herramienta calcula el porcentaje de peso que ha perdido en relación con su peso inicial. Simplemente seleccione su unidad preferida, ingrese sus pesos inicial y actual, y haga clic en el botón "Calcular".', faqTitle: 'Preguntas Frecuentes', faq1_q: '¿Cómo se calcula el porcentaje de pérdida de peso?', faq1_a: 'La fórmula es: $$ \\text{% de Pérdida} = \\frac{(\\text{Peso Inicial} - \\text{Peso Actual})}{\\text{Peso Inicial}} \\times 100 $$ Nuestra calculadora automatiza esto.', faq2_q: '¿Es de uso gratuito esta calculadora?', faq2_a: 'Sí, esta herramienta es 100% gratuita. No hay tarifas ocultas ni suscripciones.', faq3_q: '¿Por qué es útil seguir el porcentaje de pérdida de peso?', faq3_a: 'Seguir su pérdida de peso como un porcentaje proporciona una medida de progreso más consistente y motivadora, independientemente de su peso inicial.', disclaimerTitle: 'Descargo de Responsabilidad Médica', disclaimerDesc: 'Esta herramienta es solo para fines informativos y no constituye un consejo médico. Consulte a un profesional de la salud antes de realizar cambios significativos en su dieta o rutina de ejercicios.', footer: '&copy; 2025 Su Nombre de Sitio Web. Todos los derechos reservados.', errorMsg: 'Por favor, ingrese números válidos y positivos para ambos pesos.', warningMsg: (gain, unit) => `Ha ganado ${gain} ${unit}. ¡Concéntrese en su próximo paso!`, successMsg: (percentage) => `<span class="block text-base text-green-800">¡Felicidades! Ha perdido:</span><span class="block text-4xl font-bold text-green-600 my-2">${percentage}%</span><span class="block text-base text-green-800">de su peso inicial. ¡Siga así! 🎉</span>`
+                navBlog: 'Blog', title: 'Calculadora de Porcentaje de Pérdida de Peso', subtitle: 'Siga su progreso en segundos. Vea lo lejos que ha llegado en su viaje.', unitLabel: 'Unidad de Medida', unitKg: 'Kilogramos (kg)', unitLb: 'Libras (lb)', startWeightLabel: 'Peso Inicial', startWeightPlaceholder: 'p. ej., 80', currentWeightLabel: 'Peso Actual', currentWeightPlaceholder: 'p. ej., 75', calculateBtn: 'Calcular Progreso', resultPlaceholder: 'Su resultado aparecerá aquí', howItWorksTitle: 'Cómo Funciona Esta Herramienta', howItWorksDesc: 'Esta herramienta calcula el porcentaje de peso que ha perdido en relación con su peso inicial. Simplemente seleccione su unidad preferida, ingrese sus pesos inicial y actual, y haga clic en el botón "Calcular".', faqTitle: 'Preguntas Frecuentes', faq1_q: '¿Cómo se calcula el porcentaje de pérdida de peso?', faq1_a: 'La fórmula es: $$ \\text{% de Pérdida} = \\frac{(\\text{Peso Inicial} - \\text{Peso Actual})}{\\text{Peso Inicial}} \\times 100 $$ Nuestra calculadora automatiza esto.', faq2_q: '¿Es de uso gratuito esta calculadora?', faq2_a: 'Sí, esta herramienta es 100% gratuita. No hay tarifas ocultas ni suscripciones.', faq3_q: '¿Por qué es útil seguir el porcentaje de pérdida de peso?', faq3_a: 'Seguir su pérdida de peso como un porcentaje proporciona una medida de progreso más consistente y motivadora, independientemente de su peso inicial.', disclaimerTitle: 'Descargo de Responsabilidad Médica', disclaimerDesc: 'Esta herramienta es solo para fines informativos y no constituye un consejo médico. Consulte a un profesional de la salud antes de realizar cambios significativos en su dieta o rutina de ejercicios.', footer: '&copy; 2025 Su Nombre de Sitio Web. Todos los derechos reservados.', errorMsg: 'Por favor, ingrese números válidos y positivos para ambos pesos.', warningMsg: (gain, unit) => `Ha ganado ${gain} ${unit}。 ¡Concéntrese en su próximo paso!`, successMsg: (percentage) => `<span class="block text-base text-green-800">¡Felicidades! Ha perdido:</span><span class="block text-4xl font-bold text-green-600 my-2">${percentage}%</span><span class="block text-base text-green-800">de su peso inicial. ¡Siga así! 🎉</span>`
             },
             'fr': {
                 navBlog: 'Blog', title: 'Calculateur de Pourcentage de Perte de Poids', subtitle: 'Suivez vos progrès en quelques secondes. Voyez le chemin parcouru.', unitLabel: 'Unité de Mesure', unitKg: 'Kilogrammes (kg)', unitLb: 'Livres (lb)', startWeightLabel: 'Poids de Départ', startWeightPlaceholder: 'ex: 80', currentWeightLabel: 'Poids Actuel', currentWeightPlaceholder: 'ex: 75', calculateBtn: 'Calculer les Progrès', resultPlaceholder: 'Votre résultat apparaîtra ici', howItWorksTitle: 'Comment Cet Outil Fonctionne', howItWorksDesc: 'Cet outil calcule le pourcentage de poids que vous avez perdu par rapport à votre poids de départ. Sélectionnez simplement votre unité, entrez vos poids et cliquez sur le bouton "Calculer".', faqTitle: 'Questions Fréquemment Posées', faq1_q: 'Comment calculer le pourcentage de perte de poids ?', faq1_a: 'La formule est : $$ \\text{% de Perte} = \\frac{(\\text{Poids de Départ} - \\text{Poids Actuel})}{\\text{Poids de Départ}} \\times 100 $$ Notre calculateur automatise cela.', faq2_q: 'Ce calculateur est-il gratuit ?', faq2_a: 'Oui, cet outil est 100% gratuit. Il n\'y a pas de frais cachés ni d\'abonnement.', faq3_q: 'Pourquoi suivre le pourcentage de perte de poids est-il utile ?', faq3_a: 'Suivre votre perte de poids en pourcentage offre une mesure de progrès plus cohérente et motivante, quel que soit votre poids de départ.', disclaimerTitle: 'Avis de Non-responsabilité Médicale', disclaimerDesc: 'Cet outil est à titre informatif uniquement et ne constitue pas un avis médical. Consultez un professionnel de la santé avant d\'apporter des changements importants à votre alimentation ou à votre programme d\'exercices.', footer: '&copy; 2025 Votre Nom de Site Web. Tous droits réservés.', errorMsg: 'Veuillez saisir des nombres valides et positifs pour les deux poids.', warningMsg: (gain, unit) => `Vous avez pris ${gain} ${unit}. Concentrez-vous sur votre prochaine étape !`, successMsg: (percentage) => `<span class="block text-base text-green-800">Félicitations ! Vous avez perdu :</span><span class="block text-4xl font-bold text-green-600 my-2">${percentage}%</span><span class="block text-base text-green-800">de votre poids de départ. Continuez comme ça ! 🎉</span>`
@@ -204,6 +204,17 @@
         };
 
         let currentLang = 'en';
+
+        // --- NEW: Function to update links with language parameter ---
+        function updateAllLinks(lang) {
+            // Selects all internal links
+            document.querySelectorAll('a[href^="./Blog-List-Page.html"]').forEach(link => {
+                // Safely create a URL object to manipulate the search parameters
+                let url = new URL(link.href, window.location.origin);
+                url.searchParams.set('lang', lang);
+                link.href = url.pathname + url.search;
+            });
+        }
 
         function setLanguage(lang) {
             if (!translations[lang]) return;
@@ -228,6 +239,9 @@
                      displayMessage(langData.resultPlaceholder, 'placeholder');
                  }
             }
+            
+            // --- NEW: Update links every time language is changed ---
+            updateAllLinks(lang);
         }
 
         function calculate() {
@@ -267,16 +281,36 @@
         document.getElementById('start').addEventListener('keypress', (e) => { if (e.key === 'Enter') { e.preventDefault(); document.getElementById('current').focus(); } });
         document.getElementById('current').addEventListener('keypress', (e) => { if (e.key === 'Enter') { e.preventDefault(); calculate(); } });
 
+        // --- UPDATED: Page load logic ---
         window.addEventListener('DOMContentLoaded', () => {
-            const browserLang = (navigator.language || navigator.userLanguage).split('-')[0];
-            const supportedLangs = {'en': 'en', 'zh': 'zh-TW', 'es': 'es', 'fr': 'fr', 'ru': 'ru'};
-            let initialLang = 'en';
-            if (supportedLangs[browserLang]) {
-                initialLang = supportedLangs[browserLang];
+            const urlParams = new URLSearchParams(window.location.search);
+            const langFromUrl = urlParams.get('lang');
+            const supportedLangsMap = {'en': 'en', 'zh-TW': 'zh-TW', 'es': 'es', 'fr': 'fr', 'ru': 'ru'};
+            let initialLang = 'en'; // Default to English
+
+            // Priority 1: Use the language from the URL parameter if it's valid
+            if (langFromUrl && supportedLangsMap[langFromUrl]) {
+                initialLang = langFromUrl;
+            } else {
+                // Priority 2: Fallback to browser's language if no valid URL parameter
+                const browserLang = (navigator.language || navigator.userLanguage);
+                if (browserLang.startsWith('zh')) {
+                    initialLang = 'zh-TW';
+                } else {
+                    const langCode = browserLang.split('-')[0];
+                    if (supportedLangsMap[langCode]) {
+                        initialLang = langCode;
+                    }
+                }
             }
+            
+            // Set the dropdown to the correct language
             document.getElementById('language-selector').value = initialLang;
+            
+            // Set the initial language for the page
             setLanguage(initialLang);
         });
-    </script>
+</script>
+
 </body>
 </html>
