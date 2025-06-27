@@ -7,7 +7,7 @@ import google.generativeai as genai
 from bs4 import BeautifulSoup
 
 # --- 設定 ---
-GEMINI_API_KEY = "YOUR_GEMINI_API_KEY"
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 # --- 檔案與路徑設定 (更新) ---
 # 設定檔
