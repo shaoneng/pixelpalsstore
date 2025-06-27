@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-translate-key="postTitle">Post Title Placeholder</title>
+    <meta name="description" content="">
+    <link rel="canonical" href="https://pixelpals.store/blog/{{POST_FILENAME}}">
+    
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📉</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'apple-gray': { '50': '#f9fafb', '100': '#f3f4f6', '200': '#e5e7eb', '300': '#d1d5db', '400': '#9ca3af', '500': '#6b7280', '600': '#4b5563', '700': '#374151', '800': '#1f2937', '900': '#111827' },
+                        'apple-blue': { '500': '#007aff', '600': '#0071e3' }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        .blog-content h3 { font-size: 1.5em; font-weight: bold; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #1f2937; }
+        .blog-content p { margin-bottom: 1rem; line-height: 1.6; }
+        .lang-select-container::before { content: '🌐'; display: inline-block; margin-right: 0.5rem; }
+    </style>
+</head>
+<body class="bg-apple-gray-50 text-apple-gray-700">
+    
+    <nav class="bg-white/80 backdrop-blur-sm shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto max-w-5xl px-4">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <a href="../index.html" class="text-xl font-bold text-apple-gray-800">📉 Weight-Loss Calc</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="../Blog-List-Page.html" data-translate-key="navBlog" class="text-sm font-medium">Blog</a>
+                    <div class="lang-select-container">
+                        <select id="language-selector" onchange="setLanguage(this.value)" class="bg-transparent border-0 rounded-md py-1 pl-2 pr-8 text-sm focus:outline-none focus:ring-0">
+                            <option value="en">English</option>
+                            <option value="zh-TW">繁體中文</option>
+                            <option value="es">Español</option>
+                            <option value="fr">Français</option>
+                            <option value="ru">Русский</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto max-w-3xl px-4 py-8 sm:py-12">
+        <article>
+            <header class="text-center mb-10">
+                <h1 data-translate-key="postTitle" class="text-4xl sm:text-5xl font-bold text-apple-gray-900 tracking-tight"></h1>
+                <p class="mt-4 text-md text-apple-gray-500"><span data-translate-key="by">By</span> AI Assistant | {{POST_DATE}}</p>
+                <a href="../Blog-List-Page.html" data-translate-key="backToBlog" class="inline-block mt-6 font-semibold text-apple-blue-500 hover:text-apple-blue-600">&larr; Back to Blog</a>
+            </header>
+            <div data-translate-key="postContent" class="blog-content bg-white p-6 sm:p-8 rounded-2xl shadow-lg border border-apple-gray-200 text-apple-gray-700">
+            </div>
+        </article>
+    </main>
+
+    <footer class="text-center mt-12 py-8 border-t border-apple-gray-200 bg-white">
+        <div class="container mx-auto max-w-3xl px-4">
+             <p data-translate-key="footer" class="text-sm text-apple-gray-500"></p>
+        </div>
+    </footer>
+
+    <script>
+        // {{TRANSLATIONS_JSON}} is a placeholder that will be replaced by the Python script
+        const translations = {{TRANSLATIONS_JSON}};
+
+        let currentLang = 'en';
+
+        function updateAllLinks(lang) {
+            const internalPages = ['index.html', 'Blog-List-Page.html'];
+            document.querySelectorAll('a').forEach(link => {
+                try {
+                    const url = new URL(link.href);
+                    const pageName = url.pathname.split('/').pop();
+                    if (internalPages.includes(pageName)) {
+                        url.searchParams.set('lang', lang);
+                        link.href = url.href;
+                    }
+                } catch (e) { /* Ignore invalid hrefs */ }
+            });
+        }
+
+        function setLanguage(lang) {
+            if (!translations[lang]) return;
+            currentLang = lang;
+            localStorage.setItem('language', lang);
+            const langData = translations[lang];
+
+            document.documentElement.lang = lang;
+            
+            document.querySelectorAll('[data-translate-key]').forEach(el => {
+                const key = el.getAttribute('data-translate-key');
+                if (langData[key] !== undefined) {
+                    el.innerHTML = langData[key];
+                }
+            });
+
+            // Special handling for meta description
+            const metaDesc = document.querySelector('meta[name="description"]');
+            if (metaDesc && langData.postSummary) {
+                metaDesc.setAttribute('content', langData.postSummary);
+            }
+            
+            updateAllLinks(lang);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const langFromUrl = urlParams.get('lang');
+            const savedLang = localStorage.getItem('language');
+            const browserLang = (navigator.language || navigator.userLanguage);
+            const supportedLangsMap = {'en': 'en', 'zh-TW': 'zh-TW', 'es': 'es', 'fr': 'fr', 'ru': 'ru'};
+            
+            let initialLang = 'en';
+
+            if (langFromUrl && supportedLangsMap[langFromUrl]) {
+                initialLang = langFromUrl;
+            } else if (savedLang && supportedLangsMap[savedLang]) {
+                initialLang = savedLang;
+            } else {
+                if (browserLang.startsWith('zh')) {
+                    initialLang = 'zh-TW';
+                } else {
+                    const langCode = browserLang.split('-')[0];
+                    if (supportedLangsMap[langCode]) {
+                        initialLang = langCode;
+                    }
+                }
+            }
+            
+            document.getElementById('language-selector').value = initialLang;
+            setLanguage(initialLang);
+        });
+    </script>
+</body>
+</html>
