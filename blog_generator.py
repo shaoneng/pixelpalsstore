@@ -16,24 +16,32 @@ BLOG_LIST_PAGE = "Blog-List-Page.html"
 BLOG_POST_TEMPLATE = "blog_post_template.html"
 BLOG_OUTPUT_DIR = "blog"
 
-# --- 1. Gemini API 呼叫模組 (最終修復版) ---
+# --- 1. Gemini API 呼叫模組 (最終強化版) ---
 
 def generate_blog_from_keyword(keyword: str, prompt_template: str) -> dict:
     """
-    (最終修復) 使用正規表示式強力提取 JSON，並增加詳細的錯誤日誌。
+    (最終強化) 使用官方推薦的 `response.parts` 方式提取內容，並加入最詳盡的錯誤日誌。
     """
     print(f"🤖 正在使用關鍵詞 '{keyword}' 呼叫 Gemini API...")
-    raw_response_text = "" # 用於在出錯時顯示原始回傳
+    raw_response_text = "Error: No response was captured from the API."
     try:
         genai.configure(api_key=GEMINI_API_KEY)
         model = genai.GenerativeModel('gemini-2.5-pro')
         prompt = prompt_template.format(keyword=keyword)
         
+        # 隔離 API 呼叫
         response = model.generate_content(prompt)
-        raw_response_text = response.text
+        
+        # --- 全新的、更安全的回應提取方式 ---
+        # 使用 Google 官方推薦的 .parts 屬性來確保完整性
+        if hasattr(response, 'parts') and response.parts:
+            raw_response_text = "".join(part.text for part in response.parts)
+        else:
+            # 如果 .parts 不存在，則回退到 .text，增加相容性
+            raw_response_text = response.text
+        # --- 提取方式結束 ---
 
-        # --- 全新的、基於正規表示式的 JSON 提取邏輯 ---
-        # 這個正規表示式會尋找一個以 '{' 開始，以 '}' 結束，且中間包含任何字元（包括換行）的最長區塊。
+        # 使用正規表示式強力提取 JSON
         json_match = re.search(r'\{.*\}', raw_response_text, re.DOTALL)
         
         if not json_match:
@@ -45,8 +53,7 @@ def generate_blog_from_keyword(keyword: str, prompt_template: str) -> dict:
 
         json_string = json_match.group(0)
         article_data = json.loads(json_string)
-        # --- 提取邏輯結束 ---
-
+        
         print("✅ Gemini 已成功生成所有語言版本的文章內容！")
         return article_data
 
@@ -58,13 +65,14 @@ def generate_blog_from_keyword(keyword: str, prompt_template: str) -> dict:
         print("======================")
         return None
     except Exception as e:
-        print(f"❌ 呼叫 Gemini API 或處理過程中發生未知錯誤: {e}")
-        if raw_response_text:
-            print("==== API 原始回應內容 (可能導致錯誤) ====")
-            print(raw_response_text)
-            print("==========================================")
+        # --- 最詳盡的錯誤輸出 ---
+        print(f"❌ 在 API 呼叫或處理過程中發生了未知錯誤。")
+        print(f"錯誤類型: {type(e)}")
+        print(f"錯誤詳細資訊: {repr(e)}")
+        print("==== API 原始回應內容 (可能導致錯誤) ====")
+        print(raw_response_text)
+        print("==========================================")
         return None
-
 
 # --- 2. 檔案處理模組 (無變動) ---
 
@@ -87,8 +95,8 @@ def create_new_blog_post(translations_data: dict):
 
         post_content = template_content.replace("{{TRANSLATIONS_JSON}}", translations_json_string)
         post_content = template_content.replace("{{POST_FILENAME}}", filename)
-        post_content = template_content.replace("{{POST_DATE}}", datetime.date.today().strftime("%B %d, %Y"))
-        post_content = template_content.replace("Post Title Placeholder", default_title)
+        post_content = post_content.replace("{{POST_DATE}}", datetime.date.today().strftime("%B %d, %Y"))
+        post_content = post_content.replace("Post Title Placeholder", default_title)
         default_summary = translations_data.get('en', {}).get('postSummary', '')
         post_content = post_content.replace('<meta name="description" content="">', f'<meta name="description" content="{default_summary}">')
         
@@ -98,11 +106,8 @@ def create_new_blog_post(translations_data: dict):
         
         print(f"✅ 新文章已儲存為: {output_path}")
         return filename
-    except FileNotFoundError:
-        print(f"❌ 錯誤: 找不到模板檔案 '{BLOG_POST_TEMPLATE}'。")
-        return None
     except Exception as e:
-        print(f"❌ 建立文章檔案時發生錯誤: {e}")
+        print(f"❌ 建立文章檔案時發生錯誤: {repr(e)}")
         return None
 
 def update_blog_list(translations_data: dict, filename: str):
@@ -139,7 +144,7 @@ def update_blog_list(translations_data: dict, filename: str):
             f.write(str(soup.prettify()))
         print(f"✅ '{BLOG_LIST_PAGE}' 已成功更新！")
     except Exception as e:
-        print(f"❌ 更新列表頁面時發生錯誤: {e}")
+        print(f"❌ 更新列表頁面時發生錯誤: {repr(e)}")
 
 
 # --- 3. 主執行流程 ---
