@@ -3,11 +3,13 @@ import datetime
 import json
 import re
 import sys
+import time
 import google.generativeai as genai
 from bs4 import BeautifulSoup
 
 # --- 設定 ---
-GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "YOUR_GEMINI_API_KEY") 
+# 從環境變數讀取 API 金鑰
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
 
 # --- 檔案與路徑設定 ---
 KEYWORDS_FILE = "keywords.txt"
@@ -16,64 +18,70 @@ BLOG_LIST_PAGE = "Blog-List-Page.html"
 BLOG_POST_TEMPLATE = "blog_post_template.html"
 BLOG_OUTPUT_DIR = "blog"
 
-# --- 1. Gemini API 呼叫模組 (最終強化版) ---
+# --- 1. Gemini API 呼叫模組 (已修復並強化) ---
 
 def generate_blog_from_keyword(keyword: str, prompt_template: str) -> dict:
     """
-    (最終強化) 使用官方推薦的 `response.parts` 方式提取內容，並加入最詳盡的錯誤日誌。
+    (已修復) 使用正確的模型名稱，並加入安全設定與重試機制。
     """
-    print(f"🤖 正在使用關鍵詞 '{keyword}' 呼叫 Gemini API...")
-    raw_response_text = "Error: No response was captured from the API."
-    try:
-        genai.configure(api_key=GEMINI_API_KEY)
-        model = genai.GenerativeModel('gemini-2.5-pro')
+    max_retries = 3
+    retry_delay = 5  # 秒
 
-        prompt = prompt_template.format(keyword=keyword)
+    for attempt in range(max_retries):
+        print(f"🤖 正在呼叫 Gemini API... (第 {attempt + 1}/{max_retries} 次嘗試)")
+        raw_response_text = "Error: No valid response was captured from the API."
         
-        # 隔離 API 呼叫
-        response = model.generate_content(prompt)
-        
-        # --- 全新的、更安全的回應提取方式 ---
-        # 使用 Google 官方推薦的 .parts 屬性來確保完整性
-        if hasattr(response, 'parts') and response.parts:
-            raw_response_text = "".join(part.text for part in response.parts)
-        else:
-            # 如果 .parts 不存在，則回退到 .text，增加相容性
-            raw_response_text = response.text
-        # --- 提取方式結束 ---
+        try:
+            genai.configure(api_key=GEMINI_API_KEY)
 
-        # 使用正規表示式強力提取 JSON
-        json_match = re.search(r'\{.*\}', raw_response_text, re.DOTALL)
-        
-        if not json_match:
-            print("❌ Gemini API 的回應中找不到有效的 JSON 區塊。")
-            print("==== API 原始回應內容 ====")
+            # (修正) 使用有效的模型名稱，並加入安全設定，避免因內容審核被阻擋
+            model = genai.GenerativeModel(
+                model_name='gemini-1.5-flash-latest',
+                safety_settings={
+                    'HARM_CATEGORY_HARASSMENT': 'BLOCK_NONE',
+                    'HARM_CATEGORY_HATE_SPEECH': 'BLOCK_NONE',
+                    'HARM_CATEGORY_SEXUALLY_EXPLICIT': 'BLOCK_NONE',
+                    'HARM_CATEGORY_DANGEROUS_CONTENT': 'BLOCK_NONE',
+                }
+            )
+
+            prompt = prompt_template.format(keyword=keyword)
+            
+            # 執行 API 呼叫
+            response = model.generate_content(prompt)
+            
+            # 使用 .parts 屬性安全地提取文字
+            if hasattr(response, 'parts') and response.parts:
+                raw_response_text = "".join(part.text for part in response.parts)
+            else:
+                raw_response_text = response.text
+            
+            # 使用正規表示式強力提取 JSON
+            json_match = re.search(r'\{.*\}', raw_response_text, re.DOTALL)
+            
+            if not json_match:
+                print("❌ API 的回應中找不到有效的 JSON 區塊。")
+                raise ValueError("No JSON object found in response.")
+
+            json_string = json_match.group(0)
+            article_data = json.loads(json_string)
+            
+            print("✅ Gemini 已成功生成所有語言版本的文章內容！")
+            return article_data  # 成功後，立即返回結果
+
+        except Exception as e:
+            print(f"🚨 第 {attempt + 1} 次嘗試失敗。錯誤: {repr(e)}")
+            print("==== API 原始回應內容 (若有) ====")
             print(raw_response_text)
-            print("==========================")
-            return None
-
-        json_string = json_match.group(0)
-        article_data = json.loads(json_string)
-        
-        print("✅ Gemini 已成功生成所有語言版本的文章內容！")
-        return article_data
-
-    except json.JSONDecodeError as e:
-        print(f"❌ 解析 JSON 時發生嚴重錯誤: {e}")
-        print("提取出的 JSON 字串似乎已損毀。")
-        print("==== 提取出的字串 ====")
-        print(json_string)
-        print("======================")
-        return None
-    except Exception as e:
-        # --- 最詳盡的錯誤輸出 ---
-        print(f"❌ 在 API 呼叫或處理過程中發生了未知錯誤。")
-        print(f"錯誤類型: {type(e)}")
-        print(f"錯誤詳細資訊: {repr(e)}")
-        print("==== API 原始回應內容 (可能導致錯誤) ====")
-        print(raw_response_text)
-        print("==========================================")
-        return None
+            print("==============================")
+            if attempt < max_retries - 1:
+                print(f"將在 {retry_delay} 秒後重試...")
+                time.sleep(retry_delay)
+            else:
+                print("❌ 已達到最大重試次數，宣告失敗。")
+                return None
+    
+    return None
 
 # --- 2. 檔案處理模組 (無變動) ---
 
@@ -95,7 +103,7 @@ def create_new_blog_post(translations_data: dict):
         translations_json_string = json.dumps(translations_data, ensure_ascii=False, indent=8)
 
         post_content = template_content.replace("{{TRANSLATIONS_JSON}}", translations_json_string)
-        post_content = template_content.replace("{{POST_FILENAME}}", filename)
+        post_content = post_content.replace("{{POST_FILENAME}}", filename)
         post_content = post_content.replace("{{POST_DATE}}", datetime.date.today().strftime("%B %d, %Y"))
         post_content = post_content.replace("Post Title Placeholder", default_title)
         default_summary = translations_data.get('en', {}).get('postSummary', '')
@@ -147,11 +155,10 @@ def update_blog_list(translations_data: dict, filename: str):
     except Exception as e:
         print(f"❌ 更新列表頁面時發生錯誤: {repr(e)}")
 
-
 # --- 3. 主執行流程 ---
 def main():
-    if not GEMINI_API_KEY:
-        print("🔥🔥🔥 錯誤: 找不到環境變數 `GEMINI_API_KEY`。請在 GitHub Secrets 中設定它。")
+    if not GEMINI_API_KEY or GEMINI_API_KEY == "YOUR_GEMINI_API_KEY_PLACEHOLDER":
+        print("🔥🔥🔥 錯誤: 找不到環境變數 `GEMINI_API_KEY` 或金鑰不正確。請在 GitHub Secrets 中設定它。")
         sys.exit(1)
 
     try:
@@ -184,7 +191,7 @@ def main():
             with open(KEYWORDS_FILE, 'w', encoding='utf-8') as f:
                 for kw in remaining_keywords:
                     f.write(kw + '\n')
-            print(f"✅ 已成功處理並從 '{KEYWORDS_FILE}' 中移除關鍵詞 '{keyword_to_process}'。")
+            print(f"✅ 已成功處理并從 '{KEYWORDS_FILE}' 中移除關鍵詞 '{keyword_to_process}'。")
             print(f"\n🎉 恭喜！一個新的部落格文章已生成並更新！")
         else:
             print("❗ 因建立檔案失敗，流程已終止。關鍵詞未從佇列中移除。")
