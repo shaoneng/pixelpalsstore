@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO Essentials -->
+    <title>Weight-Loss Percentage Calculator | Free & Fast</title>
+    <meta name="description" content="Instantly calculate your weight loss percentage with our free and fast online tool. Track your progress and stay motivated on your fitness journey.">
+    <link rel="canonical" href="https://your-domain.com/weight-loss-percentage-calculator">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📉</text></svg>">
+
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'apple-gray': { '50': '#f9fafb', '100': '#f3f4f6', '200': '#e5e7eb', '300': '#d1d5db', '400': '#9ca3af', '500': '#6b7280', '600': '#4b5563', '700': '#374151', '800': '#1f2937', '900': '#111827' },
+                        'apple-blue': { '500': '#007aff', '600': '#0071e3' }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- JSON-LD Schema for Rich Snippets -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "How do you calculate weight loss percentage?",
+        "acceptedAnswer": { "@type": "Answer", "text": "The formula for weight loss percentage is: ((Start Weight - Current Weight) / Start Weight) * 100. Our calculator automates this process for you." }
+      },{
+        "@type": "Question",
+        "name": "Is this weight loss calculator free to use?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes, this tool is 100% free to use. There are no hidden fees, sign-ups, or subscriptions required." }
+      },{
+        "@type": "Question",
+        "name": "Why is tracking weight loss percentage useful?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Tracking your weight loss as a percentage provides a consistent and motivational measure of progress, regardless of your starting weight." }
+      }]
+    }
+    </script>
+
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+        input:focus, select:focus { outline: 2px solid #007aff60; outline-offset: 2px; }
+        /* Simple globe icon for language selector */
+        .lang-select-container::before { content: '🌐'; display: inline-block; margin-right: 0.5rem; vertical-align: middle; }
+    </style>
+
+</head>
+<body class="bg-apple-gray-50 text-apple-gray-700">
+    
+    <!-- Navigation Bar -->
+    <nav class="bg-white/80 backdrop-blur-sm shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto max-w-5xl px-4">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex-shrink-0">
+                    <a href="#" class="text-xl font-bold text-apple-gray-800" aria-label="Homepage">
+                        📉 Weight-Loss Calc
+                    </a>
+                </div>
+
+                <!-- Navigation Links & Language Selector -->
+                <div class="flex items-center space-x-4">
+                    <a href="#" data-translate-key="navBlog" class="text-sm font-medium text-apple-gray-600 hover:text-apple-blue-500 transition-colors">Blog</a>
+                    <div class="lang-select-container">
+                        <select id="language-selector" onchange="setLanguage(this.value)" class="bg-transparent border-0 rounded-md py-1 pl-2 pr-8 text-sm focus:outline-none focus:ring-0">
+                            <option value="en">English</option>
+                            <option value="zh-TW">繁體中文</option>
+                            <option value="es">Español</option>
+                            <option value="fr">Français</option>
+                            <option value="ru">Русский</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="container mx-auto max-w-3xl px-4 py-8 sm:py-12">
+
+        <!-- Header -->
+        <header class="text-center mb-8">
+            <h1 data-translate-key="title" class="text-4xl sm:text-5xl font-bold text-apple-gray-900 tracking-tight">Weight-Loss Percentage Calculator</h1>
+            <p data-translate-key="subtitle" class="mt-4 text-lg text-apple-gray-600">Track your progress in seconds. See how far you’ve come on your journey.</p>
+        </header>
+
+        <!-- Main Content: Calculator -->
+        <main id="calculator" class="bg-white p-6 sm:p-8 rounded-2xl shadow-lg border border-apple-gray-200">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                <!-- Input Form -->
+                <div>
+                    <div class="mb-4">
+                        <label for="unit-selector" data-translate-key="unitLabel" class="block text-sm font-medium text-apple-gray-800 mb-2">Measurement Unit</label>
+                        <select id="unit-selector" class="w-full px-3 py-2 bg-white border border-apple-gray-300 rounded-md text-base shadow-sm focus:outline-none focus:ring-apple-blue-500 focus:border-apple-blue-500">
+                            <option data-translate-key="unitKg" value="kg">Kilograms (kg)</option>
+                            <option data-translate-key="unitLb" value="lb">Pounds (lb)</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label for="start" data-translate-key="startWeightLabel" class="block text-sm font-medium text-apple-gray-800">Start Weight</label>
+                        <input type="number" id="start" data-translate-key="startWeightPlaceholder" placeholder="e.g., 80" class="mt-1 block w-full px-3 py-2 bg-white border border-apple-gray-300 rounded-md text-base shadow-sm placeholder-apple-gray-400 focus:outline-none focus:ring-apple-blue-500 focus:border-apple-blue-500">
+                    </div>
+                    <div class="mb-6">
+                        <label for="current" data-translate-key="currentWeightLabel" class="block text-sm font-medium text-apple-gray-800">Current Weight</label>
+                        <input type="number" id="current" data-translate-key="currentWeightPlaceholder" placeholder="e.g., 75" class="mt-1 block w-full px-3 py-2 bg-white border border-apple-gray-300 rounded-md text-base shadow-sm placeholder-apple-gray-400 focus:outline-none focus:ring-apple-blue-500 focus:border-apple-blue-500">
+                    </div>
+                    <button onclick="calculate()" data-translate-key="calculateBtn" class="w-full bg-apple-blue-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-apple-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-apple-blue-500 transition-colors duration-200">
+                        Calculate Progress
+                    </button>
+                </div>
+                <!-- Result Display Area -->
+                <div id="result-container" class="flex items-center justify-center bg-apple-gray-100 h-48 rounded-lg text-center p-4 border border-dashed border-apple-gray-300 transition-colors duration-300">
+                    <p id="result" data-translate-key="resultPlaceholder" class="text-xl text-apple-gray-500">Your result will appear here</p>
+                </div>
+            </div>
+        </main>
+
+        <!-- Narrative and Explanations Section -->
+        <section class="mt-12 space-y-10">
+            <div>
+                <h2 data-translate-key="howItWorksTitle" class="text-2xl font-bold text-apple-gray-900 mb-3 border-b pb-2">How This Tool Works</h2>
+                <p data-translate-key="howItWorksDesc" class="text-base leading-relaxed text-apple-gray-600">This tool calculates the percentage of weight you've lost... (content)</p>
+            </div>
+            <!-- FAQ Section -->
+            <div>
+                <h2 data-translate-key="faqTitle" class="text-2xl font-bold text-apple-gray-900 mb-4 border-b pb-2">Frequently Asked Questions</h2>
+                <div class="space-y-3">
+                    <details class="bg-white p-4 rounded-lg border border-apple-gray-200 shadow-sm group">
+                        <summary class="font-medium text-apple-gray-800 cursor-pointer list-none flex justify-between items-center">
+                            <span data-translate-key="faq1_q">How do you calculate weight loss percentage?</span><span class="text-apple-gray-400 group-open:rotate-90 transition-transform duration-200">▶</span>
+                        </summary>
+                        <p data-translate-key="faq1_a" class="mt-3 text-apple-gray-600">The formula is... (content)</p>
+                    </details>
+                    <details class="bg-white p-4 rounded-lg border border-apple-gray-200 shadow-sm group">
+                        <summary class="font-medium text-apple-gray-800 cursor-pointer list-none flex justify-between items-center">
+                           <span data-translate-key="faq2_q">Is this weight loss calculator free to use?</span><span class="text-apple-gray-400 group-open:rotate-90 transition-transform duration-200">▶</span>
+                        </summary>
+                        <p data-translate-key="faq2_a" class="mt-3 text-apple-gray-600">Yes, this tool is 100% free... (content)</p>
+                    </details>
+                    <details class="bg-white p-4 rounded-lg border border-apple-gray-200 shadow-sm group">
+                        <summary class="font-medium text-apple-gray-800 cursor-pointer list-none flex justify-between items-center">
+                            <span data-translate-key="faq3_q">Why is tracking weight loss percentage useful?</span><span class="text-apple-gray-400 group-open:rotate-90 transition-transform duration-200">▶</span>
+                        </summary>
+                        <p data-translate-key="faq3_a" class="mt-3 text-apple-gray-600">Tracking your weight loss as a percentage... (content)</p>
+                    </details>
+                </div>
+            </div>
+            <!-- Medical Disclaimer Section -->
+            <div>
+                <h2 data-translate-key="disclaimerTitle" class="text-2xl font-bold text-apple-gray-900 mb-3 border-b pb-2">Medical Disclaimer</h2>
+                <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-r-lg">
+                    <p data-translate-key="disclaimerDesc" class="text-yellow-800">This tool is for informational purposes only... (content)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center mt-12 pt-8 border-t border-apple-gray-200">
+            <p data-translate-key="footer" class="text-sm text-apple-gray-500">&copy; 2025 Your Website Name. All Rights Reserved.</p>
+            <div id="adsense-slot-1" class="mt-4 h-16 bg-apple-gray-100 flex items-center justify-center text-apple-gray-400 rounded-lg">Ad Placeholder</div>
+        </footer>
+    </div>
+
+    <!-- JavaScript for Calculator Logic and i18n -->
+    <script>
+        const translations = {
+            'en': {
+                navBlog: 'Blog', title: 'Weight-Loss Percentage Calculator', subtitle: 'Track your progress in seconds. See how far you’ve come on your journey.', unitLabel: 'Measurement Unit', unitKg: 'Kilograms (kg)', unitLb: 'Pounds (lb)', startWeightLabel: 'Start Weight', startWeightPlaceholder: 'e.g., 80', currentWeightLabel: 'Current Weight', currentWeightPlaceholder: 'e.g., 75', calculateBtn: 'Calculate Progress', resultPlaceholder: 'Your result will appear here', howItWorksTitle: 'How This Tool Works', howItWorksDesc: "This tool calculates the percentage of weight you've lost relative to your starting weight. Simply select your preferred unit (kilograms or pounds), enter your starting and current weights into the designated fields, and click the 'Calculate' button. The result gives you a clear, motivational percentage of your progress, helping you stay focused on your health and fitness goals.", faqTitle: 'Frequently Asked Questions', faq1_q: 'How do you calculate weight loss percentage?', faq1_a: 'The formula is: $$ \\text{Percentage Loss} = \\frac{(\\text{Start Weight} - \\text{Current Weight})}{\\text{Start Weight}} \\times 100 $$ Our calculator automates this math for you.', faq2_q: 'Is this weight loss calculator free to use?', faq2_a: 'Yes, this tool is 100% free to use. There are no hidden fees or subscriptions required. Our goal is to provide a simple, accessible tool to support your wellness journey.', faq3_q: 'Why is tracking weight loss percentage useful?', faq3_a: 'Tracking your weight loss as a percentage provides a consistent and motivational measure of progress, regardless of your starting weight. A 5kg loss is more significant for someone starting at 70kg than for someone at 120kg. The percentage contextualizes your achievements.', disclaimerTitle: 'Medical Disclaimer', disclaimerDesc: 'This tool is for informational purposes only and does not constitute medical advice. Weight loss goals and programs should be discussed with a qualified healthcare professional. Always consult your doctor or a registered dietitian before making significant changes to your diet or exercise routine.', footer: '&copy; 2025 Your Website Name. All Rights Reserved.', errorMsg: 'Please enter valid, positive numbers for both weights.', warningMsg: (gain, unit) => `You've gained ${gain} ${unit}. Focus on your next step!`, successMsg: (percentage) => `<span class="block text-base text-green-800">Congratulations! You've lost:</span><span class="block text-4xl font-bold text-green-600 my-2">${percentage}%</span><span class="block text-base text-green-800">of your starting weight. Keep it up! 🎉</span>`
+            },
+            'zh-TW': {
+                navBlog: '部落格', title: '減重百分比計算機', subtitle: '只需幾秒鐘即可追蹤您的進度，看看您在減重旅程上走了多遠。', unitLabel: '測量單位', unitKg: '公斤 (kg)', unitLb: '磅 (lb)', startWeightLabel: '開始時體重', startWeightPlaceholder: '例如：80', currentWeightLabel: '目前體重', currentWeightPlaceholder: '例如：75', calculateBtn: '計算進度', resultPlaceholder: '計算結果將顯示在此處', howItWorksTitle: '本工具如何運作', howItWorksDesc: '本工具可計算您相對於起始體重的減重百分比。只需選擇您偏好的單位（公斤或磅），在指定欄位中輸入您的起始和目前體重，然後點擊「計算進度」按鈕。結果將提供您一個清晰、激勵人心的進度百分比，幫助您專注於您的健康與健身目標。', faqTitle: '常見問題', faq1_q: '如何計算減重百分比？', faq1_a: '計算公式為：$$ \\text{減重百分比} = \\frac{(\\text{起始體重} - \\text{目前體重})}{\\text{起始體重}} \\times 100 $$ 我們的計算機會為您自動完成此計算。', faq2_q: '這個減重計算機是免費的嗎？', faq2_a: '是的，本工具 100% 免費使用。沒有任何隱藏費用或訂閱要求。我們的目標是提供簡單易用的工具，以支持您的健康之旅。', faq3_q: '為什麼追蹤減重百分比很有用？', faq3_a: '無論您的起始體重是多少，以百分比追蹤您的減重情況可提供一個更一致且激勵人心的進度衡量標準。對於起始體重為 70 公斤的人來說，減重 5 公斤比起始體重為 120 公斤的人更為顯著。百分比能將您的成就脈絡化。', disclaimerTitle: '醫療免責聲明', disclaimerDesc: '本工具僅供參考，不構成醫療建議。減重目標和計畫應與合格的醫療保健專業人員討論。在對您的飲食或運動習慣進行重大改變之前，請務必諮詢您的醫生或註冊營養師。', footer: '&copy; 2025 您的網站名稱. 版權所有.', errorMsg: '請為起始和目前體重輸入有效的正數。', warningMsg: (gain, unit) => `您的體重增加了 ${gain} ${unit}。專注於您的下一步！`, successMsg: (percentage) => `<span class="block text-base text-green-800">恭喜！您已減去：</span><span class="block text-4xl font-bold text-green-600 my-2">${percentage}%</span><span class="block text-base text-green-800">的起始體重。繼續保持！ 🎉</span>`
+            },
+            'es': {
+                navBlog: 'Blog', title: 'Calculadora de Porcentaje de Pérdida de Peso', subtitle: 'Siga su progreso en segundos. Vea lo lejos que ha llegado en su viaje.', unitLabel: 'Unidad de Medida', unitKg: 'Kilogramos (kg)', unitLb: 'Libras (lb)', startWeightLabel: 'Peso Inicial', startWeightPlaceholder: 'p. ej., 80', currentWeightLabel: 'Peso Actual', currentWeightPlaceholder: 'p. ej., 75', calculateBtn: 'Calcular Progreso', resultPlaceholder: 'Su resultado aparecerá aquí', howItWorksTitle: 'Cómo Funciona Esta Herramienta', howItWorksDesc: 'Esta herramienta calcula el porcentaje de peso que ha perdido en relación con su peso inicial. Simplemente seleccione su unidad preferida, ingrese sus pesos inicial y actual, y haga clic en el botón "Calcular".', faqTitle: 'Preguntas Frecuentes', faq1_q: '¿Cómo se calcula el porcentaje de pérdida de peso?', faq1_a: 'La fórmula es: $$ \\text{% de Pérdida} = \\frac{(\\text{Peso Inicial} - \\text{Peso Actual})}{\\text{Peso Inicial}} \\times 100 $$ Nuestra calculadora automatiza esto.', faq2_q: '¿Es de uso gratuito esta calculadora?', faq2_a: 'Sí, esta herramienta es 100% gratuita. No hay tarifas ocultas ni suscripciones.', faq3_q: '¿Por qué es útil seguir el porcentaje de pérdida de peso?', faq3_a: 'Seguir su pérdida de peso como un porcentaje proporciona una medida de progreso más consistente y motivadora, independientemente de su peso inicial.', disclaimerTitle: 'Descargo de Responsabilidad Médica', disclaimerDesc: 'Esta herramienta es solo para fines informativos y no constituye un consejo médico. Consulte a un profesional de la salud antes de realizar cambios significativos en su dieta o rutina de ejercicios.', footer: '&copy; 2025 Su Nombre de Sitio Web. Todos los derechos reservados.', errorMsg: 'Por favor, ingrese números válidos y positivos para ambos pesos.', warningMsg: (gain, unit) => `Ha ganado ${gain} ${unit}. ¡Concéntrese en su próximo paso!`, successMsg: (percentage) => `<span class="block text-base text-green-800">¡Felicidades! Ha perdido:</span><span class="block text-4xl font-bold text-green-600 my-2">${percentage}%</span><span class="block text-base text-green-800">de su peso inicial. ¡Siga así! 🎉</span>`
+            },
+            'fr': {
+                navBlog: 'Blog', title: 'Calculateur de Pourcentage de Perte de Poids', subtitle: 'Suivez vos progrès en quelques secondes. Voyez le chemin parcouru.', unitLabel: 'Unité de Mesure', unitKg: 'Kilogrammes (kg)', unitLb: 'Livres (lb)', startWeightLabel: 'Poids de Départ', startWeightPlaceholder: 'ex: 80', currentWeightLabel: 'Poids Actuel', currentWeightPlaceholder: 'ex: 75', calculateBtn: 'Calculer les Progrès', resultPlaceholder: 'Votre résultat apparaîtra ici', howItWorksTitle: 'Comment Cet Outil Fonctionne', howItWorksDesc: 'Cet outil calcule le pourcentage de poids que vous avez perdu par rapport à votre poids de départ. Sélectionnez simplement votre unité, entrez vos poids et cliquez sur le bouton "Calculer".', faqTitle: 'Questions Fréquemment Posées', faq1_q: 'Comment calculer le pourcentage de perte de poids ?', faq1_a: 'La formule est : $$ \\text{% de Perte} = \\frac{(\\text{Poids de Départ} - \\text{Poids Actuel})}{\\text{Poids de Départ}} \\times 100 $$ Notre calculateur automatise cela.', faq2_q: 'Ce calculateur est-il gratuit ?', faq2_a: 'Oui, cet outil est 100% gratuit. Il n\'y a pas de frais cachés ni d\'abonnement.', faq3_q: 'Pourquoi suivre le pourcentage de perte de poids est-il utile ?', faq3_a: 'Suivre votre perte de poids en pourcentage offre une mesure de progrès plus cohérente et motivante, quel que soit votre poids de départ.', disclaimerTitle: 'Avis de Non-responsabilité Médicale', disclaimerDesc: 'Cet outil est à titre informatif uniquement et ne constitue pas un avis médical. Consultez un professionnel de la santé avant d\'apporter des changements importants à votre alimentation ou à votre programme d\'exercices.', footer: '&copy; 2025 Votre Nom de Site Web. Tous droits réservés.', errorMsg: 'Veuillez saisir des nombres valides et positifs pour les deux poids.', warningMsg: (gain, unit) => `Vous avez pris ${gain} ${unit}. Concentrez-vous sur votre prochaine étape !`, successMsg: (percentage) => `<span class="block text-base text-green-800">Félicitations ! Vous avez perdu :</span><span class="block text-4xl font-bold text-green-600 my-2">${percentage}%</span><span class="block text-base text-green-800">de votre poids de départ. Continuez comme ça ! 🎉</span>`
+            },
+            'ru': {
+                navBlog: 'Блог', title: 'Калькулятор Процента Потери Веса', subtitle: 'Отслеживайте свой прогресс за секунды. Посмотрите, как далеко вы продвинулись.', unitLabel: 'Единица измерения', unitKg: 'Килограммы (кг)', unitLb: 'Фунты (lb)', startWeightLabel: 'Начальный Вес', startWeightPlaceholder: 'напр., 80', currentWeightLabel: 'Текущий Вес', currentWeightPlaceholder: 'напр., 75', calculateBtn: 'Рассчитать Прогресс', resultPlaceholder: 'Ваш результат появится здесь', howItWorksTitle: 'Как Работает Этот Инструмент', howItWorksDesc: 'Этот инструмент вычисляет процент потерянного веса относительно вашего начального веса. Просто выберите единицу измерения, введите начальный и текущий вес и нажмите кнопку "Рассчитать".', faqTitle: 'Часто Задаваемые Вопросы', faq1_q: 'Как рассчитать процент потери веса?', faq1_a: 'Формула: $$ \\text{% Потери} = \\frac{(\\text{Начальный Вес} - \\text{Текущий Вес})}{\\text{Начальный Вес}} \\times 100 $$ Наш калькулятор автоматизирует это.', faq2_q: 'Этот калькулятор бесплатный?', faq2_a: 'Да, этот инструмент на 100% бесплатный. Нет никаких скрытых платежей или подписок.', faq3_q: 'Почему полезно отслеживать процент потери веса?', faq3_a: 'Отслеживание потери веса в процентах обеспечивает более последовательную и мотивирующую меру прогресса, независимо от вашего начального веса.', disclaimerTitle: 'Медицинская Оговорка', disclaimerDesc: 'Этот инструмент предназначен только для информационных целей и не является медицинской консультацией. Проконсультируйтесь с медицинским работником перед внесением значительных изменений в свой рацион или программу упражнений.', footer: '&copy; 2025 Название Вашего Сайта. Все права защищены.', errorMsg: 'Пожалуйста, введите действительные положительные числа для обоих весов.', warningMsg: (gain, unit) => `Вы набрали ${gain} ${unit}. Сконцентрируйтесь на следующем шаге!`, successMsg: (percentage) => `<span class="block text-base text-green-800">Поздравляем! Вы потеряли:</span><span class="block text-4xl font-bold text-green-600 my-2">${percentage}%</span><span class="block text-base text-green-800">от вашего начального веса. Так держать! 🎉</span>`
+            }
+        };
+
+        let currentLang = 'en';
+
+        function setLanguage(lang) {
+            if (!translations[lang]) return;
+            currentLang = lang;
+            const langData = translations[lang];
+
+            document.documentElement.lang = lang;
+            
+            document.querySelectorAll('[data-translate-key]').forEach(el => {
+                const key = el.getAttribute('data-translate-key');
+                if (langData[key]) {
+                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                        el.placeholder = langData[key];
+                    } else {
+                        el.innerHTML = langData[key];
+                    }
+                }
+            });
+            
+            if(document.getElementById('result')) {
+                 if (document.getElementById('result').getAttribute('data-translate-key') === 'resultPlaceholder') {
+                     displayMessage(langData.resultPlaceholder, 'placeholder');
+                 }
+            }
+        }
+
+        function calculate() {
+            const startWeight = parseFloat(document.getElementById('start').value);
+            const currentWeight = parseFloat(document.getElementById('current').value);
+            const selectedUnit = document.getElementById('unit-selector').value;
+            const langData = translations[currentLang];
+
+            if (isNaN(startWeight) || isNaN(currentWeight) || startWeight <= 0 || currentWeight <= 0) {
+                displayMessage(langData.errorMsg, 'error');
+                return;
+            }
+            if (currentWeight > startWeight) {
+                const gain = (currentWeight - startWeight).toFixed(1);
+                displayMessage(langData.warningMsg(gain, selectedUnit), 'warning');
+                return;
+            }
+            const percentage = (((startWeight - currentWeight) / startWeight) * 100);
+            displayMessage(langData.successMsg(percentage.toFixed(2)), 'success');
+        }
+        
+        function displayMessage(html, type) {
+            const resultContainer = document.getElementById('result-container');
+            const resultEl = document.getElementById('result');
+            resultContainer.className = 'flex items-center justify-center h-48 rounded-lg text-center p-4 border border-dashed transition-colors duration-300';
+            resultEl.innerHTML = html;
+            
+            const typeClasses = {
+                success: 'bg-green-50 border-green-400', error: 'bg-red-50 border-red-400',
+                warning: 'bg-yellow-50 border-yellow-400', placeholder: 'bg-apple-gray-100 border-apple-gray-300'
+            };
+            if (typeClasses[type]) {
+                resultContainer.classList.add(...typeClasses[type].split(' '));
+            }
+        }
+
+        document.getElementById('start').addEventListener('keypress', (e) => { if (e.key === 'Enter') { e.preventDefault(); document.getElementById('current').focus(); } });
+        document.getElementById('current').addEventListener('keypress', (e) => { if (e.key === 'Enter') { e.preventDefault(); calculate(); } });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const browserLang = (navigator.language || navigator.userLanguage).split('-')[0];
+            const supportedLangs = {'en': 'en', 'zh': 'zh-TW', 'es': 'es', 'fr': 'fr', 'ru': 'ru'};
+            let initialLang = 'en';
+            if (supportedLangs[browserLang]) {
+                initialLang = supportedLangs[browserLang];
+            }
+            document.getElementById('language-selector').value = initialLang;
+            setLanguage(initialLang);
+        });
+    </script>
+</body>
+</html>
