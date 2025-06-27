@@ -1,0 +1,57 @@
+# GitHub Actions 工作流程的名稱
+name: Generate New Blog Post
+
+# 工作流程的觸發方式
+on:
+  # workflow_dispatch 允許您在 GitHub 頁面上手動點擊按鈕來執行此工作流程
+  workflow_dispatch:
+
+# 定義工作內容
+jobs:
+  build-and-deploy:
+    # 指定運行的伺服器環境
+    runs-on: ubuntu-latest
+
+    # 定義工作步驟
+    steps:
+      # 步驟 1: "check out" 您的程式碼
+      # 這個步驟會將您儲存庫中的所有檔案下載到運行環境中
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 步驟 2: 設定 Python 環境
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10' # 您可以指定需要的 Python 版本
+
+      # 步驟 3: 安裝 Python 依賴套件
+      # 這會執行您在本機開發時使用的 `pip install` 指令
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install google-generativeai beautifulsoup4
+
+      # 步驟 4: 執行您的 Python 腳本
+      - name: Run blog generator script
+        # 關鍵步驟：在這裡，我們將 GitHub Secret 注入到環境變數中
+        # Python 腳本中的 os.getenv("GEMINI_API_KEY") 就會讀到這個值
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python blog_generator.py
+
+      # 步驟 5: 將變更提交回儲存庫
+      # 您的腳本會生成新文章並修改列表頁，這些變更需要被儲存回 GitHub
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add .
+          # `git diff-index --quiet HEAD` 會檢查是否有任何變更
+          # 如果沒有變更，就不執行 commit 和 push，避免出錯
+          if ! git diff-index --quiet HEAD; then
+            git commit -m "Automated: Generated new blog post"
+            git push
+          else
+            echo "No changes to commit."
+          fi
