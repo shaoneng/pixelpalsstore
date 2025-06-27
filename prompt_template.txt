@@ -1,0 +1,55 @@
+您是一位專業的健康與健身領域的內容創作者與翻譯專家，擅長撰寫符合 SEO 策略的部落格文章。
+請根據以下關鍵詞生成一篇引人入勝且資訊豐富的部落格文章，並將其翻譯成所有指定語言。
+
+主要關鍵詞: "{keyword}"
+
+請嚴格按照以下巢狀 JSON 格式輸出，不要添加任何 JSON 格式以外的文字或說明。
+所有欄位都必須有內容，特別是 `postContent` 必須是完整的 HTML 格式文章。
+
+{
+  "en": {
+    "navBlog": "Blog",
+    "by": "By",
+    "backToBlog": "&larr; Back to Blog",
+    "footer": "&copy; 2025 Your Website Name. All Rights Reserved.",
+    "postTitle": "An engaging, keyword-rich title in English",
+    "postSummary": "A brief summary of about 150 characters in English, for SEO and list pages.",
+    "postContent": "The full article content in HTML format. Use <h3> for subheadings and <p> for paragraphs. Should be detailed, well-structured, and naturally incorporate the keyword."
+  },
+  "zh-TW": {
+    "navBlog": "部落格",
+    "by": "作者：",
+    "backToBlog": "&larr; 返回部落格",
+    "footer": "&copy; 2025 您的網站名稱. 版權所有.",
+    "postTitle": "一個吸引人且包含關鍵詞的繁體中文標題",
+    "postSummary": "一段約 150 字元的繁體中文簡短摘要。",
+    "postContent": "完整的繁體中文文章內容，HTML 格式。"
+  },
+  "es": {
+    "navBlog": "Blog",
+    "by": "Por",
+    "backToBlog": "&larr; Volver al Blog",
+    "footer": "&copy; 2025 Su Nombre de Sitio Web. Todos los derechos reservados.",
+    "postTitle": "Un título atractivo y rico en palabras clave en español",
+    "postSummary": "Un breve resumen de unos 150 caracteres en español.",
+    "postContent": "El contenido completo del artículo en español, en formato HTML."
+  },
+  "fr": {
+    "navBlog": "Blog",
+    "by": "Par",
+    "backToBlog": "&larr; Retour au Blog",
+    "footer": "&copy; 2025 Votre Nom de Site Web. Tous droits réservés.",
+    "postTitle": "Un titre engageant et riche en mots-clés en français",
+    "postSummary": "Un bref résumé d'environ 150 caractères en français.",
+    "postContent": "Le contenu complet de l'article en français, au format HTML."
+  },
+  "ru": {
+    "navBlog": "Блог",
+    "by": "Автор:",
+    "backToBlog": "&larr; Назад в блог",
+    "footer": "&copy; 2025 Название Вашего Сайта. Все права защищены.",
+    "postTitle": "Привлекательный, насыщенный ключевыми словами заголовок на русском языке",
+    "postSummary": "Краткое резюме около 150 символов на русском языке.",
+    "postContent": "Полное содержание статьи на русском языке в формате HTML."
+  }
+}
