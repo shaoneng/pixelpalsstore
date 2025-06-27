@@ -21,9 +21,7 @@ BLOG_OUTPUT_DIR = "blog"
 # --- 1. Gemini API 呼叫模組 (已修復並強化) ---
 
 def generate_blog_from_keyword(keyword: str, prompt_template: str) -> dict:
-    """
-    (已修復) 使用正確的模型名稱，並加入安全設定與重試機制。
-    """
+   
     max_retries = 3
     retry_delay = 5  # 秒
 
@@ -34,7 +32,8 @@ def generate_blog_from_keyword(keyword: str, prompt_template: str) -> dict:
         try:
             genai.configure(api_key=GEMINI_API_KEY)
 
-            # (修正) 使用有效的模型名稱，並加入安全設定，避免因內容審核被阻擋
+            # (修正) 使用有效的模型名稱，並加入安全設定
+            # (強化) 新增 generation_config 以強制 API 回應為 JSON 格式
             model = genai.GenerativeModel(
                 model_name='gemini-2.5-flash',
                 safety_settings={
@@ -42,7 +41,10 @@ def generate_blog_from_keyword(keyword: str, prompt_template: str) -> dict:
                     'HARM_CATEGORY_HATE_SPEECH': 'BLOCK_NONE',
                     'HARM_CATEGORY_SEXUALLY_EXPLICIT': 'BLOCK_NONE',
                     'HARM_CATEGORY_DANGEROUS_CONTENT': 'BLOCK_NONE',
-                }
+                },
+                generation_config=genai.types.GenerationConfig(
+                    response_mime_type="application/json"
+                )
             )
 
             prompt = prompt_template.format(keyword=keyword)
@@ -50,26 +52,32 @@ def generate_blog_from_keyword(keyword: str, prompt_template: str) -> dict:
             # 執行 API 呼叫
             response = model.generate_content(prompt)
             
-            # 使用 .parts 屬性安全地提取文字
-            if hasattr(response, 'parts') and response.parts:
-                raw_response_text = "".join(part.text for part in response.parts)
-            else:
-                raw_response_text = response.text
+            # (修正) 由於已強制 API 回應 JSON，可以直接解析 response.text
+            raw_response_text = response.text
+            article_data = json.loads(raw_response_text)
             
-            # 使用正規表示式強力提取 JSON
-            json_match = re.search(r'\{.*\}', raw_response_text, re.DOTALL)
-            
-            if not json_match:
-                print("❌ API 的回應中找不到有效的 JSON 區塊。")
-                raise ValueError("No JSON object found in response.")
+            # (強化) 驗證關鍵的 'en' 鍵是否存在，確保 JSON 結構符合預期
+            if 'en' not in article_data or 'postTitle' not in article_data.get('en', {}):
+                raise ValueError("API 回應的 JSON 中缺少必要的 'en' 鍵或 'postTitle'。")
 
-            json_string = json_match.group(0)
-            article_data = json.loads(json_string)
-            
             print("✅ Gemini 已成功生成所有語言版本的文章內容！")
             return article_data  # 成功後，立即返回結果
 
+        except (json.JSONDecodeError, ValueError) as e:
+            # (強化) 專門處理 JSON 解析錯誤或結構驗證失敗的情況
+            print(f"🚨 第 {attempt + 1} 次嘗試失敗。錯誤 (JSON 解析或結構問題): {repr(e)}")
+            print("==== API 原始回應內容 (若有) ====")
+            print(raw_response_text)
+            print("==============================")
+            if attempt < max_retries - 1:
+                print(f"將在 {retry_delay} 秒後重試...")
+                time.sleep(retry_delay)
+            else:
+                print("❌ 已達到最大重試次數，宣告失敗。")
+                return None
+        
         except Exception as e:
+            # 處理其他所有預期外的錯誤 (例如 API 連線問題)
             print(f"🚨 第 {attempt + 1} 次嘗試失敗。錯誤: {repr(e)}")
             print("==== API 原始回應內容 (若有) ====")
             print(raw_response_text)
