@@ -7,7 +7,6 @@ import google.generativeai as genai
 from bs4 import BeautifulSoup
 
 # --- 設定 ---
-# (更新) 從環境變數讀取 API 金鑰
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 # --- 檔案與路徑設定 ---
@@ -17,48 +16,53 @@ BLOG_LIST_PAGE = "Blog-List-Page.html"
 BLOG_POST_TEMPLATE = "blog_post_template.html"
 BLOG_OUTPUT_DIR = "blog"
 
-# --- 1. Gemini API 呼叫模組 (已更新錯誤處理) ---
+# --- 1. Gemini API 呼叫模組 (最終修復版) ---
 
 def generate_blog_from_keyword(keyword: str, prompt_template: str) -> dict:
     """
-    (更新) 使用更穩健的方式解析 Gemini API 的 JSON 回應。
+    (最終修復) 使用正規表示式強力提取 JSON，並增加詳細的錯誤日誌。
     """
     print(f"🤖 正在使用關鍵詞 '{keyword}' 呼叫 Gemini API...")
+    raw_response_text = "" # 用於在出錯時顯示原始回傳
     try:
         genai.configure(api_key=GEMINI_API_KEY)
         model = genai.GenerativeModel('gemini-1.5-flash')
         prompt = prompt_template.format(keyword=keyword)
-        response = model.generate_content(prompt)
-
-        # --- 全新的、更穩健的 JSON 解析邏輯 ---
-        response_text = response.text
         
-        # 1. 找到第一個 '{' 的位置
-        json_start_index = response_text.find('{')
-        # 2. 找到最後一個 '}' 的位置
-        json_end_index = response_text.rfind('}')
+        response = model.generate_content(prompt)
+        raw_response_text = response.text
 
-        if json_start_index == -1 or json_end_index == -1:
-            print("❌ Gemini API 的回應中找不到有效的 JSON 物件。")
-            print("收到的回應:", response_text)
+        # --- 全新的、基於正規表示式的 JSON 提取邏輯 ---
+        # 這個正規表示式會尋找一個以 '{' 開始，以 '}' 結束，且中間包含任何字元（包括換行）的最長區塊。
+        json_match = re.search(r'\{.*\}', raw_response_text, re.DOTALL)
+        
+        if not json_match:
+            print("❌ Gemini API 的回應中找不到有效的 JSON 區塊。")
+            print("==== API 原始回應內容 ====")
+            print(raw_response_text)
+            print("==========================")
             return None
 
-        # 3. 擷取 JSON 字串
-        json_string = response_text[json_start_index : json_end_index + 1]
-        
-        # 4. 解析擷取出的字串
+        json_string = json_match.group(0)
         article_data = json.loads(json_string)
-        # --- 解析邏輯結束 ---
+        # --- 提取邏輯結束 ---
 
         print("✅ Gemini 已成功生成所有語言版本的文章內容！")
         return article_data
 
     except json.JSONDecodeError as e:
-        print(f"❌ 解析 JSON 時發生錯誤: {e}")
-        print("清理後的字串內容:", json_string)
+        print(f"❌ 解析 JSON 時發生嚴重錯誤: {e}")
+        print("提取出的 JSON 字串似乎已損毀。")
+        print("==== 提取出的字串 ====")
+        print(json_string)
+        print("======================")
         return None
     except Exception as e:
         print(f"❌ 呼叫 Gemini API 或處理過程中發生未知錯誤: {e}")
+        if raw_response_text:
+            print("==== API 原始回應內容 (可能導致錯誤) ====")
+            print(raw_response_text)
+            print("==========================================")
         return None
 
 
@@ -82,9 +86,9 @@ def create_new_blog_post(translations_data: dict):
         translations_json_string = json.dumps(translations_data, ensure_ascii=False, indent=8)
 
         post_content = template_content.replace("{{TRANSLATIONS_JSON}}", translations_json_string)
-        post_content = post_content.replace("{{POST_FILENAME}}", filename)
-        post_content = post_content.replace("{{POST_DATE}}", datetime.date.today().strftime("%B %d, %Y"))
-        post_content = post_content.replace("Post Title Placeholder", default_title)
+        post_content = template_content.replace("{{POST_FILENAME}}", filename)
+        post_content = template_content.replace("{{POST_DATE}}", datetime.date.today().strftime("%B %d, %Y"))
+        post_content = template_content.replace("Post Title Placeholder", default_title)
         default_summary = translations_data.get('en', {}).get('postSummary', '')
         post_content = post_content.replace('<meta name="description" content="">', f'<meta name="description" content="{default_summary}">')
         
@@ -137,9 +141,9 @@ def update_blog_list(translations_data: dict, filename: str):
     except Exception as e:
         print(f"❌ 更新列表頁面時發生錯誤: {e}")
 
+
 # --- 3. 主執行流程 ---
 def main():
-    """主執行函數"""
     if not GEMINI_API_KEY:
         print("🔥🔥🔥 錯誤: 找不到環境變數 `GEMINI_API_KEY`。請在 GitHub Secrets 中設定它。")
         sys.exit(1)
