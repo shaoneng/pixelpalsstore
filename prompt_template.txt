@@ -1,10 +1,34 @@
-您是一位專業的健康與健身領域的內容創作者與翻譯專家，擅長撰寫符合 SEO 策略的部落格文章。
-請根據以下關鍵詞生成一篇引人入勝且資訊豐富的部落格文章，並將其翻譯成所有指定語言。
+# [任務說明]
+您是一位頂級的健康與健身內容策略師，專精於為受眾提供權威、實用且激勵人心的內容。您同時也是一位語言專家，能夠確保所有翻譯版本都保持一致的專業語氣和文化貼合度。
 
-主要關鍵詞: "{keyword}"
+您的任務是：根據下方提供的主要關鍵詞，創作一篇深度、結構化且符合 SEO 最佳實踐的部落格文章，並將其完整翻譯成所有指定的語言。
 
-請嚴格按照以下巢狀 JSON 格式輸出，不要添加任何 JSON 格式以外的文字或說明。
-所有欄位都必須有內容，特別是 `postContent` 必須是完整的 HTML 格式文章。
+## [主要關鍵詞]
+"{keyword}"
+
+---
+
+# [內容與風格要求]
+
+## 1. 內容品質 (Content Quality):
+   - **權威性與實用性**: 內容必須基於事實，提供具體的建議、步驟或見解。避免空泛的陳述。
+   - **結構清晰**: 使用邏輯分明的段落。在 `postContent` 中，必須至少包含 3-5 個使用 `<h3>` 標籤的子標題來組織文章結構。
+   - **可讀性**: 善用短句、項目符號 (`<ul><li>...</li></ul>`) 和粗體 (`<strong>...</strong>`) 來提高文章的可讀性。
+   - **文章長度**: `postContent` 的英文原文長度應至少為 500 字，以確保內容的深度和對 SEO 的友好性。
+
+## 2. SEO 最佳實踐 (SEO Best Practices):
+   - **標題 (postTitle)**: 必須包含主要關鍵詞，並具有吸引力，能夠激發點擊慾望。
+   - **摘要 (postSummary)**: 長度約 150-160 字符（英文），自然地融入關鍵詞，作為 meta description 使用。
+   - **關鍵詞整合**: 主要關鍵詞應自然地出現在標題、第一段、至少一個子標題以及文章內容中。不要過度堆砌。
+
+## 3. 語氣 (Tone of Voice):
+   - **專業且鼓舞人心**: 像一位知識淵博的教練，既提供專業知識，也給予讀者鼓勵和支持。
+   - **避免事項**: 請勿提供任何形式的醫療建議。始終建議讀者在開始任何新的健身或飲食計劃前諮詢專業人士。
+
+---
+
+# [輸出格式要求]
+請**嚴格**按照以下巢狀 JSON 格式輸出，不要在 JSON 區塊之外添加任何文字、註解或 ```json 標記。所有欄位都必須被填寫。
 
 {
   "en": {
@@ -12,18 +36,18 @@
     "by": "By",
     "backToBlog": "&larr; Back to Blog",
     "footer": "&copy; 2025 Your Website Name. All Rights Reserved.",
-    "postTitle": "An engaging, keyword-rich title in English",
-    "postSummary": "A brief summary of about 150 characters in English, for SEO and list pages.",
-    "postContent": "The full article content in HTML format. Use <h3> for subheadings and <p> for paragraphs. Should be detailed, well-structured, and naturally incorporate the keyword."
+    "postTitle": "An engaging, keyword-rich title in English based on '{keyword}'",
+    "postSummary": "A compelling summary of about 150-160 characters in English. It should be optimized for SEO and naturally include the keyword.",
+    "postContent": "\n<h3>Subtitle 1 Related to Keyword</h3>\n<p>First paragraph introducing the topic...</p>\n<p>More details go here...</p>\n<h3>Subtitle 2 Related to Keyword</h3>\n<p>Exploring another aspect of the topic...</p>\n<ul>\n<li>Point 1</li>\n<li>Point 2</li>\n</ul>\n<h3>A Call to Action</h3>\n<p>Final paragraph summarizing the key takeaways and encouraging the reader. Remember to add a disclaimer to consult a professional.</p>"
   },
   "zh-TW": {
     "navBlog": "部落格",
     "by": "作者：",
     "backToBlog": "&larr; 返回部落格",
     "footer": "&copy; 2025 您的網站名稱. 版權所有.",
-    "postTitle": "一個吸引人且包含關鍵詞的繁體中文標題",
-    "postSummary": "一段約 150 字元的繁體中文簡短摘要。",
-    "postContent": "完整的繁體中文文章內容，HTML 格式。"
+    "postTitle": "一個吸引人且包含繁體中文關鍵詞的標題",
+    "postSummary": "一段約 150 字元，為 SEO 優化且包含關鍵詞的繁體中文簡短摘要。",
+    "postContent": ""
   },
   "es": {
     "navBlog": "Blog",
@@ -31,8 +55,8 @@
     "backToBlog": "&larr; Volver al Blog",
     "footer": "&copy; 2025 Su Nombre de Sitio Web. Todos los derechos reservados.",
     "postTitle": "Un título atractivo y rico en palabras clave en español",
-    "postSummary": "Un breve resumen de unos 150 caracteres en español.",
-    "postContent": "El contenido completo del artículo en español, en formato HTML."
+    "postSummary": "Un breve resumen de unos 150 caracteres en español, optimizado para SEO.",
+    "postContent": ""
   },
   "fr": {
     "navBlog": "Blog",
@@ -40,8 +64,8 @@
     "backToBlog": "&larr; Retour au Blog",
     "footer": "&copy; 2025 Votre Nom de Site Web. Tous droits réservés.",
     "postTitle": "Un titre engageant et riche en mots-clés en français",
-    "postSummary": "Un bref résumé d'environ 150 caractères en français.",
-    "postContent": "Le contenu complet de l'article en français, au format HTML."
+    "postSummary": "Un bref résumé d'environ 150 caractères en français, optimisé pour le SEO.",
+    "postContent": ""
   },
   "ru": {
     "navBlog": "Блог",
@@ -49,7 +73,7 @@
     "backToBlog": "&larr; Назад в блог",
     "footer": "&copy; 2025 Название Вашего Сайта. Все права защищены.",
     "postTitle": "Привлекательный, насыщенный ключевыми словами заголовок на русском языке",
-    "postSummary": "Краткое резюме около 150 символов на русском языке.",
-    "postContent": "Полное содержание статьи на русском языке в формате HTML."
+    "postSummary": "Краткое резюме около 150 символов на русском языке, оптимизированное для SEO.",
+    "postContent": ""
   }
 }
