@@ -38,31 +38,29 @@
     
     <!-- Navigation Bar (Same as main page) -->
     <nav class="bg-white/80 backdrop-blur-sm shadow-sm sticky top-0 z-50">
-        <div class="container mx-auto max-w-5xl px-4">
-            <div class="flex items-center justify-between h-16">
-                <!-- Logo -->
-                <div class="flex-shrink-0">
-                    <a href="index.html" class="text-xl font-bold text-apple-gray-800" aria-label="Homepage">
-                        📉 Weight-Loss Calc
-                    </a>
-                </div>
+    <div class="container mx-auto max-w-5xl px-4">
+        <div class="flex items-center justify-between h-16">
+            <div class="flex-shrink-0">
+                <a href="index.html" class="text-xl font-bold text-apple-gray-800" aria-label="Homepage">
+                    📉 Weight-Loss Calc
+                </a>
+            </div>
 
-                <!-- Navigation Links & Language Selector -->
-                <div class="flex items-center space-x-4">
-                    <a href="#" data-translate-key="navBlog" class="text-sm font-semibold text-apple-blue-500" aria-current="page">Blog</a>
-                    <div class="lang-select-container">
-                        <select id="language-selector" onchange="setLanguage(this.value)" class="bg-transparent border-0 rounded-md py-1 pl-2 pr-8 text-sm focus:outline-none focus:ring-0">
-                            <option value="en">English</option>
-                            <option value="zh-TW">繁體中文</option>
-                            <option value="es">Español</option>
-                            <option value="fr">Français</option>
-                            <option value="ru">Русский</option>
-                        </select>
-                    </div>
+            <div class="flex items-center space-x-4">
+                <a href="Blog-List-Page.html" data-translate-key="navBlog" class="text-sm font-semibold text-apple-blue-500" aria-current="page">Blog</a>
+                <div class="lang-select-container">
+                    <select id="language-selector" onchange="setLanguage(this.value)" class="bg-transparent border-0 rounded-md py-1 pl-2 pr-8 text-sm focus:outline-none focus:ring-0">
+                        <option value="en">English</option>
+                        <option value="zh-TW">繁體中文</option>
+                        <option value="es">Español</option>
+                        <option value="fr">Français</option>
+                        <option value="ru">Русский</option>
+                    </select>
                 </div>
             </div>
         </div>
-    </nav>
+    </div>
+</nav>
 
     <!-- Main Content -->
     <main class="container mx-auto max-w-3xl px-4 py-8 sm:py-12">
@@ -203,18 +201,30 @@
 
     let currentLang = 'en';
 
+    // FIX: A new, more robust function to update links
     function updateAllLinks(lang) {
-        document.querySelectorAll('a[href^="index.html"], a[href^="blog.html"], a[href^="blog-post-1.html"]').forEach(link => {
-            let url = new URL(link.href, window.location.origin);
-            url.searchParams.set('lang', lang);
-            link.href = url.pathname + url.search;
+        const internalPages = ['index.html', 'Blog-List-Page.html', 'blog-post-1.html'];
+        document.querySelectorAll('a').forEach(link => {
+            try {
+                // Use new URL(link.href) to get the full, absolute URL
+                const url = new URL(link.href);
+                // Get the last part of the path, e.g., "Blog-List-Page.html"
+                const pageName = url.pathname.split('/').pop();
+                
+                if (internalPages.includes(pageName)) {
+                    url.searchParams.set('lang', lang);
+                    link.href = url.href;
+                }
+            } catch (e) {
+                // This will ignore invalid hrefs like "#"
+            }
         });
     }
 
     function setLanguage(lang) {
         if (!translations[lang]) return;
         currentLang = lang;
-        localStorage.setItem('language', lang); // Save language to localStorage
+        localStorage.setItem('language', lang);
         const langData = translations[lang];
 
         document.documentElement.lang = lang;
@@ -226,7 +236,7 @@
             }
         });
 
-        updateAllLinks(lang); // Update links on language change
+        updateAllLinks(lang);
     }
 
     window.addEventListener('DOMContentLoaded', () => {
@@ -236,7 +246,7 @@
         const browserLang = (navigator.language || navigator.userLanguage);
         const supportedLangsMap = {'en': 'en', 'zh-TW': 'zh-TW', 'es': 'es', 'fr': 'fr', 'ru': 'ru'};
         
-        let initialLang = 'en'; // Default
+        let initialLang = 'en';
 
         if (langFromUrl && supportedLangsMap[langFromUrl]) {
             initialLang = langFromUrl;
