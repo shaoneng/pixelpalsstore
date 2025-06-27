@@ -7,7 +7,7 @@ import google.generativeai as genai
 from bs4 import BeautifulSoup
 
 # --- 設定 ---
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "YOUR_GEMINI_API_KEY") 
 
 # --- 檔案與路徑設定 ---
 KEYWORDS_FILE = "keywords.txt"
@@ -27,6 +27,7 @@ def generate_blog_from_keyword(keyword: str, prompt_template: str) -> dict:
     try:
         genai.configure(api_key=GEMINI_API_KEY)
         model = genai.GenerativeModel('gemini-2.5-pro')
+
         prompt = prompt_template.format(keyword=keyword)
         
         # 隔離 API 呼叫
