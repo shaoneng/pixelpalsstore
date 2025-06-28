@@ -54,8 +54,7 @@ def generate_blog_from_keyword(keyword: str, prompt_template: str) -> dict | Non
             
             genai.configure(api_key=GEMINI_API_KEY)
             
-            # [修正 1] 使用正確的模型名稱 'gemini-2.5-flash'
-            # [修正 2] 加入 generation_config 以強制要求 JSON 輸出
+            # [修正] 將模型更新為 gemini-2.5-pro
             model = genai.GenerativeModel(
                 model_name="gemini-2.5-pro", 
                 safety_settings={c: "BLOCK_NONE" for c in (
@@ -72,7 +71,6 @@ def generate_blog_from_keyword(keyword: str, prompt_template: str) -> dict | Non
             response = model.generate_content(prompt)
             
             # 步驟 4: 直接解析 JSON 回應
-            # [修正 3] 因為已要求 JSON 格式，所以直接使用 response.text
             raw_text_for_debugging = response.text
             article_data = json.loads(raw_text_for_debugging)
             
@@ -89,7 +87,6 @@ def generate_blog_from_keyword(keyword: str, prompt_template: str) -> dict | Non
         except Exception as e:
             print(f"🚨 嘗試 {attempt} 失敗：{repr(e)}")
             print("==== API 原始回應內容 (供除錯參考) ====")
-            # [修正 4] 確保打印出從 API 捕獲的實際文本，以便除錯
             print(raw_text_for_debugging)
             print("====================================")
             if attempt < max_retries:
