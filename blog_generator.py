@@ -221,7 +221,7 @@ def update_blog_list(translations_data: dict, filename: str):
 def main():
     # 檢查 API 金鑰是否存在
     if not GEMINI_API_KEY or GEMINI_API_KEY == "YOUR_GEMINI_API_KEY_PLACEHOLDER":
-        print("�🔥🔥 錯誤: 找不到環境變數 `GEMINI_API_KEY` 或金鑰不正確。請在 GitHub Secrets 中設定它。")
+        print("🔥🔥 錯誤: 找不到環境變數 `GEMINI_API_KEY` 或金鑰不正確。請在 GitHub Secrets 中設定它。")
         sys.exit(1)
 
     # 讀取關鍵詞檔案
@@ -271,4 +271,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-�
+
