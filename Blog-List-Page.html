@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Health & Fitness Blog | Weight-Loss Calc</title>
-    <meta name="description" content="Explore tips, guides, and stories on weight loss, nutrition, and healthy living from the Weight-Loss Calc team.">
-    <link rel="canonical" href="https://pixelpals.store/Blog-List-Page">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📉</text></svg>">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
+ <head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>
+   Health & Fitness Blog | Weight-Loss Calc
+  </title>
+  <meta content="Explore tips, guides, and stories on weight loss, nutrition, and healthy living from the Weight-Loss Calc team." name="description">
+  <link href="https://pixelpals.store/Blog-List-Page" rel="canonical">
+  <link href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text y=%22.9em%22 font-size=%2290%22&gt;📉&lt;/text&gt;&lt;/svg&gt;" rel="icon">
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <script>
+   tailwind.config = {
             theme: {
                 extend: {
                     colors: {
@@ -19,148 +22,199 @@
                 }
             }
         }
-    </script>
-    <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  </script>
+  <style>
+   body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
         select:focus { outline: 2px solid #007aff60; outline-offset: 2px; }
         .lang-select-container::before { content: '🌐'; display: inline-block; margin-right: 0.5rem; vertical-align: middle; }
-    </style>
-</head>
-<body class="bg-apple-gray-50 text-apple-gray-700">
-    
-    <nav class="bg-white/80 backdrop-blur-sm shadow-sm sticky top-0 z-50">
-        <div class="container mx-auto max-w-5xl px-4">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex-shrink-0">
-                    <a href="index.html" class="text-xl font-bold text-apple-gray-800" aria-label="Homepage">
-                        📉 Weight-Loss Calc
-                    </a>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <a href="Blog-List-Page.html" data-translate-key="navBlog" class="text-sm font-semibold text-apple-blue-500" aria-current="page">Blog</a>
-                    <div class="lang-select-container">
-                        <select id="language-selector" onchange="setLanguage(this.value)" class="bg-transparent border-0 rounded-md py-1 pl-2 pr-8 text-sm focus:outline-none focus:ring-0">
-                            <option value="en">English</option>
-                            <option value="zh-TW">繁體中文</option>
-                            <option value="es">Español</option>
-                            <option value="fr">Français</option>
-                            <option value="ru">Русский</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <main class="container mx-auto max-w-3xl px-4 py-8 sm:py-12">
-        
-        <header class="text-center mb-12">
-            <h1 data-translate-key="pageTitle" class="text-4xl sm:text-5xl font-bold text-apple-gray-900 tracking-tight">Health & Fitness Blog</h1>
-            <p data-translate-key="pageSubtitle" class="mt-4 text-lg text-apple-gray-600">Your guide to a healthier, more active lifestyle.</p>
-        </header>
-
-        <!-- Python script will automatically add new blog posts here -->
-        <div class="space-y-10">
-            
-            <article>
-                <h2 class="text-2xl sm:text-3xl font-bold text-apple-gray-800 mb-2">
-                    <!-- The title is now dynamic -->
-                    <a href="./blog/unlock-your-potential-the-proven-benefits-of-intermittent-fasting-for-weight-loss.html" class="hover:text-apple-blue-500 transition-colors" data-translate-key="postTitle_unlock-your-potential-the-proven-benefits-of-intermittent-fasting-for-weight-loss"></a>
-                </h2>
-                <p class="text-sm text-apple-gray-500 mb-4"><span data-translate-key="by">By</span> AI Assistant | June 28, 2025</p>
-                <!-- The summary is now dynamic -->
-                <p class="text-base leading-relaxed text-apple-gray-600" data-translate-key="postSummary_unlock-your-potential-the-proven-benefits-of-intermittent-fasting-for-weight-loss"></p>
-                <a href="./blog/unlock-your-potential-the-proven-benefits-of-intermittent-fasting-for-weight-loss.html" data-translate-key="readMore" class="inline-block mt-4 font-semibold text-apple-blue-500 hover:text-apple-blue-600">Read More &rarr;</a>
-            </article>
-
-            <hr class="border-apple-gray-200"/>
-            
-            <article>
-                <h2 class="text-2xl sm:text-3xl font-bold text-apple-gray-800 mb-2">
-                    <!-- The title is now dynamic -->
-                    <a href="./blog/blog-post-1.html" class="hover:text-apple-blue-500 transition-colors" data-translate-key="postTitle_5-common-weight-loss-myths-debunked"></a>
-                </h2>
-                <p class="text-sm text-apple-gray-500 mb-4"><span data-translate-key="by">By</span> Jane Doe | June 26, 2025</p>
-                <!-- The summary is now dynamic -->
-                <p class="text-base leading-relaxed text-apple-gray-600" data-translate-key="postSummary_5-common-weight-loss-myths-debunked"></p>
-                <a href="./blog/blog-post-1.html" data-translate-key="readMore" class="inline-block mt-4 font-semibold text-apple-blue-500 hover:text-apple-blue-600">Read More &rarr;</a>
-            </article>
-
-            <hr class="border-apple-gray-200"/>
-
-        </div>
-
-    </main>
-
-    <footer class="text-center mt-12 py-8 border-t border-apple-gray-200 bg-white">
-        <div class="container mx-auto max-w-3xl px-4">
-             <p data-translate-key="footer" class="text-sm text-apple-gray-500"></p>
-        </div>
-    </footer>
-
-    <script>
-    const translations = {
-        "en": {
-            "navBlog": "Blog",
-            "pageTitle": "Health & Fitness Blog",
-            "pageSubtitle": "Your guide to a healthier, more active lifestyle.",
-            "by": "By",
-            "readMore": "Read More &rarr;",
-            "footer": "&copy; 2025 Your Website Name. All Rights Reserved.",
-            "postTitle_unlock-your-potential-the-proven-benefits-of-intermittent-fasting-for-weight-loss": "Unlock Your Potential: The Proven Benefits of Intermittent Fasting for Weight Loss",
-            "postSummary_unlock-your-potential-the-proven-benefits-of-intermittent-fasting-for-weight-loss": "Explore the powerful benefits of intermittent fasting for weight loss. Learn how this eating pattern helps burn fat, boost metabolism, and improve your health.",
-            "postTitle_5-common-weight-loss-myths-debunked": "5 Common Weight Loss Myths Debunked",
-            "postSummary_5-common-weight-loss-myths-debunked": "Navigating the world of weight loss can be confusing with so much conflicting information. We're here to clear up some of the most persistent myths, from \"carbs make you fat\" to \"you must do hours of cardio\"..."
-        },
-        "zh-TW": {
-            "navBlog": "部落格",
-            "pageTitle": "健康與健身部落格",
-            "pageSubtitle": "您通往更健康、更活躍生活方式的指南。",
-            "by": "作者：",
-            "readMore": "閱讀更多 &rarr;",
-            "footer": "&copy; 2025 您的網站名稱. 版權所有.",
-            "postTitle_unlock-your-potential-the-proven-benefits-of-intermittent-fasting-for-weight-loss": "解鎖您的潛力：間歇性斷食對減重的實證效益",
-            "postSummary_unlock-your-potential-the-proven-benefits-of-intermittent-fasting-for-weight-loss": "探索間歇性斷食對減重的強大效益。了解這種飲食模式如何幫助您燃燒脂肪、促進新陳代謝並改善您的整體健康。",
-            "postTitle_5-common-weight-loss-myths-debunked": "破解 5 個常見的減重迷思",
-            "postSummary_5-common-weight-loss-myths-debunked": "減重的世界充滿了矛盾的資訊，常常讓人感到困惑。我們在這裡為您澄清一些最頑固的迷思，從「碳水化合物會讓你變胖」到「你必須做好幾個小時的有氧運動」..."
-        },
-        "es": {
-            "navBlog": "Blog",
-            "pageTitle": "Blog de Salud y Fitness",
-            "pageSubtitle": "Su guía para un estilo de vida más saludable y activo.",
-            "by": "Por",
-            "readMore": "Leer Más &rarr;",
-            "footer": "&copy; 2025 Su Nombre de Sitio Web. Todos los derechos reservados.",
-            "postTitle_unlock-your-potential-the-proven-benefits-of-intermittent-fasting-for-weight-loss": "Desbloquee su potencial: Los beneficios probados del ayuno intermitente para perder peso",
-            "postSummary_unlock-your-potential-the-proven-benefits-of-intermittent-fasting-for-weight-loss": "Explore los poderosos beneficios del ayuno intermitente para perder peso. Aprenda cómo este patrón de alimentación ayuda a quemar grasa, impulsar el metabolismo y mejorar su salud.",
-            "postTitle_5-common-weight-loss-myths-debunked": "5 Mitos Comunes sobre la Pérdida de Peso Desmentidos",
-            "postSummary_5-common-weight-loss-myths-debunked": "Navegar por el mundo de la pérdida de peso puede ser confuso. Estamos aquí para aclarar algunos de los mitos más persistentes, desde \"los carbohidratos engordan\" hasta \"debes hacer horas de cardio\"..."
-        },
-        "fr": {
-            "navBlog": "Blog",
-            "pageTitle": "Blog sur la Santé et le Fitness",
-            "pageSubtitle": "Votre guide pour un mode de vie plus sain et plus actif.",
-            "by": "Par",
-            "readMore": "Lire la Suite &rarr;",
-            "footer": "&copy; 2025 Votre Nom de Site Web. Tous droits réservés.",
-            "postTitle_unlock-your-potential-the-proven-benefits-of-intermittent-fasting-for-weight-loss": "Libérez votre potentiel : Les bienfaits prouvés du jeûne intermittent pour la perte de poids",
-            "postSummary_unlock-your-potential-the-proven-benefits-of-intermittent-fasting-for-weight-loss": "Explorez les puissants bienfaits du jeûne intermittent pour la perte de poids. Découvrez comment ce modèle alimentaire aide à brûler les graisses, à stimuler le métabolisme et à améliorer votre santé.",
-            "postTitle_5-common-weight-loss-myths-debunked": "5 Mythes Courants sur la Perte de Poids Démystifiés",
-            "postSummary_5-common-weight-loss-myths-debunked": "Naviguer dans le monde de la perte de poids peut être déroutant. Nous sommes là pour clarifier certains des mythes les plus persistants, de \"les glucides font grossir\" à \"il faut faire des heures de cardio\"..."
-        },
-        "ru": {
-            "navBlog": "Блог",
-            "pageTitle": "Блог о Здоровье и Фитнесе",
-            "pageSubtitle": "Ваш гид к более здоровому и активному образу жизни.",
-            "by": "Автор:",
-            "readMore": "Читать Далее &rarr;",
-            "footer": "&copy; 2025 Название Вашего Сайта. Все права защищены.",
-            "postTitle_unlock-your-potential-the-proven-benefits-of-intermittent-fasting-for-weight-loss": "Раскройте свой потенциал: доказанные преимущества интервального голодания для похудения",
-            "postSummary_unlock-your-potential-the-proven-benefits-of-intermittent-fasting-for-weight-loss": "Откройте для себя мощные преимущества интервального голодания для похудения. Узнайте, как этот режим питания помогает сжигать жир, ускорять метаболизм и улучшать ваше здоровье.",
-            "postTitle_5-common-weight-loss-myths-debunked": "5 Распространенных Мифов о Потере Веса: Разоблачение",
-            "postSummary_5-common-weight-loss-myths-debunked": "Мир похудения может сбивать с толку. Мы здесь, чтобы развеять некоторые из самых стойких мифов, от «углеводы полнят» до «нужно делать часы кардио»..."
-        }
-    };
+  </style>
+ </head>
+ <body class="bg-apple-gray-50 text-apple-gray-700">
+  <nav class="bg-white/80 backdrop-blur-sm shadow-sm sticky top-0 z-50">
+   <div class="container mx-auto max-w-5xl px-4">
+    <div class="flex items-center justify-between h-16">
+     <div class="flex-shrink-0">
+      <a aria-label="Homepage" class="text-xl font-bold text-apple-gray-800" href="index.html">
+       📉 Weight-Loss Calc
+      </a>
+     </div>
+     <div class="flex items-center space-x-4">
+      <a aria-current="page" class="text-sm font-semibold text-apple-blue-500" data-translate-key="navBlog" href="Blog-List-Page.html">
+       Blog
+      </a>
+      <div class="lang-select-container">
+       <select class="bg-transparent border-0 rounded-md py-1 pl-2 pr-8 text-sm focus:outline-none focus:ring-0" id="language-selector" onchange="setLanguage(this.value)">
+        <option value="en">
+         English
+        </option>
+        <option value="zh-TW">
+         繁體中文
+        </option>
+        <option value="es">
+         Espa&ntilde;ol
+        </option>
+        <option value="fr">
+         Fran&ccedil;ais
+        </option>
+        <option value="ru">
+         &Rcy;&ucy;&scy;&scy;&kcy;&icy;&jcy;
+        </option>
+       </select>
+      </div>
+     </div>
+    </div>
+   </div>
+  </nav>
+  <main class="container mx-auto max-w-3xl px-4 py-8 sm:py-12">
+   <header class="text-center mb-12">
+    <h1 class="text-4xl sm:text-5xl font-bold text-apple-gray-900 tracking-tight" data-translate-key="pageTitle">
+     Health & Fitness Blog
+    </h1>
+    <p class="mt-4 text-lg text-apple-gray-600" data-translate-key="pageSubtitle">
+     Your guide to a healthier, more active lifestyle.
+    </p>
+   </header>
+   <!-- Python script will automatically add new blog posts here -->
+   <div class="space-y-10">
+    <article>
+     <h2 class="text-2xl sm:text-3xl font-bold text-apple-gray-800 mb-2">
+      <a class="hover:text-apple-blue-500 transition-colors" data-translate-key="postTitle_the-ultimate-guide-how-to-calculate-macros-for-your-fitness-goals" href="blog/the-ultimate-guide-how-to-calculate-macros-for-your-fitness-goals.html">
+      </a>
+     </h2>
+     <p class="text-sm text-apple-gray-500 mb-4">
+      <span data-translate-key="by">
+       By
+      </span>
+      AI Assistant | June 28, 2025
+     </p>
+     <p class="text-base leading-relaxed text-apple-gray-600" data-translate-key="postSummary_the-ultimate-guide-how-to-calculate-macros-for-your-fitness-goals">
+     </p>
+     <a class="inline-block mt-4 font-semibold text-apple-blue-500 hover:text-apple-blue-600" data-translate-key="readMore" href="blog/the-ultimate-guide-how-to-calculate-macros-for-your-fitness-goals.html">
+      Read More &rarr;
+     </a>
+    </article>
+    <hr class="border-apple-gray-200">
+    <article>
+     <h2 class="text-2xl sm:text-3xl font-bold text-apple-gray-800 mb-2">
+      <!-- The title is now dynamic -->
+      <a class="hover:text-apple-blue-500 transition-colors" data-translate-key="postTitle_unlock-your-potential-the-proven-benefits-of-intermittent-fasting-for-weight-loss" href="./blog/unlock-your-potential-the-proven-benefits-of-intermittent-fasting-for-weight-loss.html">
+      </a>
+     </h2>
+     <p class="text-sm text-apple-gray-500 mb-4">
+      <span data-translate-key="by">
+       By
+      </span>
+      AI Assistant | June 28, 2025
+     </p>
+     <!-- The summary is now dynamic -->
+     <p class="text-base leading-relaxed text-apple-gray-600" data-translate-key="postSummary_unlock-your-potential-the-proven-benefits-of-intermittent-fasting-for-weight-loss">
+     </p>
+     <a class="inline-block mt-4 font-semibold text-apple-blue-500 hover:text-apple-blue-600" data-translate-key="readMore" href="./blog/unlock-your-potential-the-proven-benefits-of-intermittent-fasting-for-weight-loss.html">
+      Read More &rarr;
+     </a>
+    </article>
+    <hr class="border-apple-gray-200">
+    <article>
+     <h2 class="text-2xl sm:text-3xl font-bold text-apple-gray-800 mb-2">
+      <!-- The title is now dynamic -->
+      <a class="hover:text-apple-blue-500 transition-colors" data-translate-key="postTitle_5-common-weight-loss-myths-debunked" href="./blog/blog-post-1.html">
+      </a>
+     </h2>
+     <p class="text-sm text-apple-gray-500 mb-4">
+      <span data-translate-key="by">
+       By
+      </span>
+      Jane Doe | June 26, 2025
+     </p>
+     <!-- The summary is now dynamic -->
+     <p class="text-base leading-relaxed text-apple-gray-600" data-translate-key="postSummary_5-common-weight-loss-myths-debunked">
+     </p>
+     <a class="inline-block mt-4 font-semibold text-apple-blue-500 hover:text-apple-blue-600" data-translate-key="readMore" href="./blog/blog-post-1.html">
+      Read More &rarr;
+     </a>
+    </article>
+    <hr class="border-apple-gray-200">
+   </div>
+  </main>
+  <footer class="text-center mt-12 py-8 border-t border-apple-gray-200 bg-white">
+   <div class="container mx-auto max-w-3xl px-4">
+    <p class="text-sm text-apple-gray-500" data-translate-key="footer">
+    </p>
+   </div>
+  </footer>
+  <script>
+   const translations = {
+    "en": {
+        "navBlog": "Blog",
+        "pageTitle": "Health & Fitness Blog",
+        "pageSubtitle": "Your guide to a healthier, more active lifestyle.",
+        "by": "By",
+        "readMore": "Read More &rarr;",
+        "footer": "&copy; 2025 Your Website Name. All Rights Reserved.",
+        "postTitle_unlock-your-potential-the-proven-benefits-of-intermittent-fasting-for-weight-loss": "Unlock Your Potential: The Proven Benefits of Intermittent Fasting for Weight Loss",
+        "postSummary_unlock-your-potential-the-proven-benefits-of-intermittent-fasting-for-weight-loss": "Explore the powerful benefits of intermittent fasting for weight loss. Learn how this eating pattern helps burn fat, boost metabolism, and improve your health.",
+        "postTitle_5-common-weight-loss-myths-debunked": "5 Common Weight Loss Myths Debunked",
+        "postSummary_5-common-weight-loss-myths-debunked": "Navigating the world of weight loss can be confusing with so much conflicting information. We're here to clear up some of the most persistent myths, from \"carbs make you fat\" to \"you must do hours of cardio\"...",
+        "postTitle_the-ultimate-guide-how-to-calculate-macros-for-your-fitness-goals": "The Ultimate Guide: How to Calculate Macros for Your Fitness Goals",
+        "postSummary_the-ultimate-guide-how-to-calculate-macros-for-your-fitness-goals": "Ready to transform your results? Learn how to calculate macros for fitness goals with our step-by-step guide. Fuel your body right and achieve your dreams."
+    },
+    "zh-TW": {
+        "navBlog": "部落格",
+        "pageTitle": "健康與健身部落格",
+        "pageSubtitle": "您通往更健康、更活躍生活方式的指南。",
+        "by": "作者：",
+        "readMore": "閱讀更多 &rarr;",
+        "footer": "&copy; 2025 您的網站名稱. 版權所有.",
+        "postTitle_unlock-your-potential-the-proven-benefits-of-intermittent-fasting-for-weight-loss": "解鎖您的潛力：間歇性斷食對減重的實證效益",
+        "postSummary_unlock-your-potential-the-proven-benefits-of-intermittent-fasting-for-weight-loss": "探索間歇性斷食對減重的強大效益。了解這種飲食模式如何幫助您燃燒脂肪、促進新陳代謝並改善您的整體健康。",
+        "postTitle_5-common-weight-loss-myths-debunked": "破解 5 個常見的減重迷思",
+        "postSummary_5-common-weight-loss-myths-debunked": "減重的世界充滿了矛盾的資訊，常常讓人感到困惑。我們在這裡為您澄清一些最頑固的迷思，從「碳水化合物會讓你變胖」到「你必須做好幾個小時的有氧運動」...",
+        "postTitle_the-ultimate-guide-how-to-calculate-macros-for-your-fitness-goals": "終極指南：如何為您的健身目標計算巨量營養素",
+        "postSummary_the-ultimate-guide-how-to-calculate-macros-for-your-fitness-goals": "準備好徹底改變您的成果嗎？跟隨我們的步驟指南，學習如何為健身目標計算巨量營養素。正確地為您的身體提供燃料，實現您的夢想。"
+    },
+    "es": {
+        "navBlog": "Blog",
+        "pageTitle": "Blog de Salud y Fitness",
+        "pageSubtitle": "Su guía para un estilo de vida más saludable y activo.",
+        "by": "Por",
+        "readMore": "Leer Más &rarr;",
+        "footer": "&copy; 2025 Su Nombre de Sitio Web. Todos los derechos reservados.",
+        "postTitle_unlock-your-potential-the-proven-benefits-of-intermittent-fasting-for-weight-loss": "Desbloquee su potencial: Los beneficios probados del ayuno intermitente para perder peso",
+        "postSummary_unlock-your-potential-the-proven-benefits-of-intermittent-fasting-for-weight-loss": "Explore los poderosos beneficios del ayuno intermitente para perder peso. Aprenda cómo este patrón de alimentación ayuda a quemar grasa, impulsar el metabolismo y mejorar su salud.",
+        "postTitle_5-common-weight-loss-myths-debunked": "5 Mitos Comunes sobre la Pérdida de Peso Desmentidos",
+        "postSummary_5-common-weight-loss-myths-debunked": "Navegar por el mundo de la pérdida de peso puede ser confuso. Estamos aquí para aclarar algunos de los mitos más persistentes, desde \"los carbohidratos engordan\" hasta \"debes hacer horas de cardio\"...",
+        "postTitle_the-ultimate-guide-how-to-calculate-macros-for-your-fitness-goals": "La Guía Definitiva: Cómo Calcular Macros para Tus Objetivos de Fitness",
+        "postSummary_the-ultimate-guide-how-to-calculate-macros-for-your-fitness-goals": "¿Listo para transformar tus resultados? Aprende cómo calcular macros para tus objetivos de fitness con nuestra guía paso a paso. Nutre tu cuerpo y alcanza tus metas."
+    },
+    "fr": {
+        "navBlog": "Blog",
+        "pageTitle": "Blog sur la Santé et le Fitness",
+        "pageSubtitle": "Votre guide pour un mode de vie plus sain et plus actif.",
+        "by": "Par",
+        "readMore": "Lire la Suite &rarr;",
+        "footer": "&copy; 2025 Votre Nom de Site Web. Tous droits réservés.",
+        "postTitle_unlock-your-potential-the-proven-benefits-of-intermittent-fasting-for-weight-loss": "Libérez votre potentiel : Les bienfaits prouvés du jeûne intermittent pour la perte de poids",
+        "postSummary_unlock-your-potential-the-proven-benefits-of-intermittent-fasting-for-weight-loss": "Explorez les puissants bienfaits du jeûne intermittent pour la perte de poids. Découvrez comment ce modèle alimentaire aide à brûler les graisses, à stimuler le métabolisme et à améliorer votre santé.",
+        "postTitle_5-common-weight-loss-myths-debunked": "5 Mythes Courants sur la Perte de Poids Démystifiés",
+        "postSummary_5-common-weight-loss-myths-debunked": "Naviguer dans le monde de la perte de poids peut être déroutant. Nous sommes là pour clarifier certains des mythes les plus persistants, de \"les glucides font grossir\" à \"il faut faire des heures de cardio\"...",
+        "postTitle_the-ultimate-guide-how-to-calculate-macros-for-your-fitness-goals": "Le Guide Ultime : Comment Calculer Vos Macros Pour Atteindre Vos Objectifs Fitness",
+        "postSummary_the-ultimate-guide-how-to-calculate-macros-for-your-fitness-goals": "Prêt à transformer vos résultats ? Apprenez comment calculer vos macros pour vos objectifs fitness avec notre guide étape par étape. Alimentez votre corps et réussissez."
+    },
+    "ru": {
+        "navBlog": "Блог",
+        "pageTitle": "Блог о Здоровье и Фитнесе",
+        "pageSubtitle": "Ваш гид к более здоровому и активному образу жизни.",
+        "by": "Автор:",
+        "readMore": "Читать Далее &rarr;",
+        "footer": "&copy; 2025 Название Вашего Сайта. Все права защищены.",
+        "postTitle_unlock-your-potential-the-proven-benefits-of-intermittent-fasting-for-weight-loss": "Раскройте свой потенциал: доказанные преимущества интервального голодания для похудения",
+        "postSummary_unlock-your-potential-the-proven-benefits-of-intermittent-fasting-for-weight-loss": "Откройте для себя мощные преимущества интервального голодания для похудения. Узнайте, как этот режим питания помогает сжигать жир, ускорять метаболизм и улучшать ваше здоровье.",
+        "postTitle_5-common-weight-loss-myths-debunked": "5 Распространенных Мифов о Потере Веса: Разоблачение",
+        "postSummary_5-common-weight-loss-myths-debunked": "Мир похудения может сбивать с толку. Мы здесь, чтобы развеять некоторые из самых стойких мифов, от «углеводы полнят» до «нужно делать часы кардио»...",
+        "postTitle_the-ultimate-guide-how-to-calculate-macros-for-your-fitness-goals": "Полное руководство: Как рассчитать макросы для ваших фитнес-целей",
+        "postSummary_the-ultimate-guide-how-to-calculate-macros-for-your-fitness-goals": "Готовы преобразить свои результаты? Узнайте, как рассчитать макросы для фитнес-целей с помощью нашего пошагового руководства. Питайте свое тело правильно."
+    }
+};
 
     let currentLang = 'en';
 
@@ -237,6 +291,6 @@
         document.getElementById('language-selector').value = initialLang;
         setLanguage(initialLang);
     });
-</script>
-</body>
+  </script>
+ </body>
 </html>
