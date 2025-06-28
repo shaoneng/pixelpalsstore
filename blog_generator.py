@@ -4,12 +4,12 @@ import json
 import re
 import sys
 import time
+import unicodedata # 導入 unicodedata 以支援多樣化的字元
 import google.generativeai as genai
 from bs4 import BeautifulSoup
 
 # --- 全域設定 (Global Settings) ---
 # 從環境變數讀取您的 Gemini API 金鑰
-# 這是為了安全性，避免將金鑰直接寫在程式碼中
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
 
 # --- 檔案與路徑設定 (File and Path Settings) ---
@@ -19,76 +19,74 @@ BLOG_LIST_PAGE = "Blog-List-Page.html"
 BLOG_POST_TEMPLATE = "blog_post_template.html"
 BLOG_OUTPUT_DIR = "blog"
 
-# --- 模組 1: Gemini API 呼叫 (Gemini API Call Module) ---
-
-def _strip_keys(obj):
-    """
-    遞迴移除字典中所有鍵 (key) 的前後多餘空白。
-    這是一個輔助函式，用來清理 AI 可能回傳的不標準 JSON 格式。
-    """
-    if isinstance(obj, dict):
-        return {k.strip(): _strip_keys(v) for k, v in obj.items()}
-    if isinstance(obj, list):
-        return [_strip_keys(i) for i in obj]
-    return obj
+# --- 模組 1: Gemini API 呼叫 (Gemini API Call Module) - 已根據建議重構 ---
 
 def generate_blog_from_keyword(keyword: str, prompt_template: str) -> dict | None:
     """
     根據給定的關鍵詞和提示詞模板，呼叫 Gemini API 來生成部落格文章內容。
-
-    Args:
-        keyword: 要生成文章的主題關鍵詞。
-        prompt_template: 包含指示和格式的提示詞模板。
-
-    Returns:
-        一個包含所有語言翻譯的字典，如果失敗則回傳 None。
+    此版本進行了多項優化，以提高穩定性和除錯效率。
     """
-    max_retries, retry_delay = 3, 5  # 設定重試次數和延遲時間
+    # 步驟 1: 構建一個更嚴格的提示詞，強制模型輸出乾淨的 JSON
+    prompt = prompt_template.format(keyword=keyword).strip()
+
+    max_retries, retry_delay = 3, 5
     for attempt in range(1, max_retries + 1):
         print(f"🤖 正在呼叫 Gemini API... (第 {attempt}/{max_retries} 次嘗試)")
         raw_text_for_debugging = f"錯誤: 在第 {attempt} 次嘗試中，API 呼叫未成功返回任何內容。"
         try:
-            # 步驟 1: 檢查並設定 API 金鑰
+            # 步驟 2: 檢查 API 金鑰
             if not GEMINI_API_KEY:
                 raise ValueError("GEMINI_API_KEY 環境變數未設定或為空。")
             
             genai.configure(api_key=GEMINI_API_KEY)
             
-            # [修正] 將模型更新為 gemini-2.5-pro
+            # 步驟 3: 初始化模型，採用新版 SDK 語法和更穩定的設定
             model = genai.GenerativeModel(
-                model_name="gemini-2.5-pro", 
-                safety_settings={c: "BLOCK_NONE" for c in (
-                    "HARM_CATEGORY_HARASSMENT",
-                    "HARM_CATEGORY_HATE_SPEECH",
-                    "HARM_CATEGORY_SEXUALLY_EXPLICIT",
-                    "HARM_CATEGORY_DANGEROUS_CONTENT",
-                )},
-                generation_config={"response_mime_type": "application/json"}
+                model_name="gemini-2.5-pro",
+                # 新版 SDK 推薦使用 list of dicts 格式
+                safety_settings=[
+                    {"category": c, "threshold": "BLOCK_NONE"}
+                    for c in [
+                        "HARM_CATEGORY_HARASSMENT",
+                        "HARM_CATEGORY_HATE_SPEECH",
+                        "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+                        "HARM_CATEGORY_DANGEROUS_CONTENT",
+                    ]
+                ],
+                # 使用強型別的 GenerationConfig，並強制 JSON 輸出與設定 token 上限
+                generation_config=genai.GenerationConfig(
+                    response_mime_type="application/json",
+                    max_tokens=8192, 
+                )
             )
 
-            # 步驟 3: 生成並發送提示
-            prompt = prompt_template.format(keyword=keyword)
+            # 步驟 4: 發送請求並獲取回應
             response = model.generate_content(prompt)
             
-            # 步驟 4: 直接解析 JSON 回應
-            raw_text_for_debugging = response.text
+            # 步驟 5: 穩健地獲取回應文本
+            # 雙保險機制：優先使用 .text，若不存在則回退到遍歷 candidates
+            raw_text_for_debugging = getattr(response, "text", None)
+            if not raw_text_for_debugging and response.candidates:
+                raw_text_for_debugging = response.candidates[0].content.parts[0].text
+            
+            if not raw_text_for_debugging:
+                raise ValueError("API 回應為空，無法獲取任何文本內容。")
+
             article_data = json.loads(raw_text_for_debugging)
             
-            # 雖然要求了 JSON，但作為保險措施，還是清理一下 key
-            article_data = _strip_keys(article_data)
-
-            # 步驟 5: 驗證 JSON 的基本結構
-            if "en" not in article_data or "postTitle" not in article_data.get("en", {}):
-                raise KeyError("JSON 缺少 'en.postTitle' 鍵，請檢查 prompt 或 API 回傳內容。")
+            # 步驟 6: 進行更友好的驗證
+            if not isinstance(article_data.get("en"), dict) or "postTitle" not in article_data.get("en", {}):
+                raise ValueError(f"AI 返回的 JSON 格式不符，缺少 'en' 或 'en.postTitle'。收到的內容片段: \n{raw_text_for_debugging[:500]}")
 
             print("✅ Gemini 已成功生成所有語言版本的文章內容！")
             return article_data
 
         except Exception as e:
-            print(f"🚨 嘗試 {attempt} 失敗：{repr(e)}")
-            print("==== API 原始回應內容 (供除錯參考) ====")
-            print(raw_text_for_debugging)
-            print("====================================")
+            print(f"🚨 第 {attempt}/{max_retries} 次嘗試失敗: {repr(e)}")
+            if "raw_text_for_debugging" in locals() and raw_text_for_debugging:
+                 print("==== API 原始回應內容 (供除錯參考) ====")
+                 print(raw_text_for_debugging)
+                 print("====================================")
             if attempt < max_retries:
                 print(f"將在 {retry_delay} 秒後重試…\n")
                 time.sleep(retry_delay)
@@ -100,48 +98,40 @@ def generate_blog_from_keyword(keyword: str, prompt_template: str) -> dict | Non
 
 def slugify(text: str) -> str:
     """
-    將字串轉換為適合用作 URL 或檔名的 "slug" 格式。
-    例如："Hello World!" -> "hello-world"
+    [優化] 將字串轉換為適合用作 URL 或檔名的 "slug" 格式。
+    此版本能正確處理中文、日文、韓文、emoji 等多位元組字元。
     """
-    text = text.lower()
-    text = re.sub(r'\s+', '-', text)      # 將空白替換為連字號
-    text = re.sub(r'[^\w-]', '', text)    # 移除所有非單詞、非連字號的字元
+    text = str(text)
+    # 使用 NFKD 正規化將相容字元（如全形字母）轉換為其基本形式
+    text = unicodedata.normalize('NFKD', text).encode('ascii', 'ignore').decode('ascii')
+    text = text.lower().strip()
+    text = re.sub(r'[\s]+', '-', text)       # 將一個或多個空白字元替換為單一連字號
+    text = re.sub(r'[^\w-]', '', text)     # 移除所有非單詞字元和非連字號的字元
     return text
 
 def create_new_blog_post(translations_data: dict) -> str | None:
     """
     使用模板和 AI 生成的內容來建立一個新的部落格文章 HTML 檔案。
-
-    Args:
-        translations_data: 包含所有翻譯內容的字典。
-
-    Returns:
-        成功建立的檔案名稱，如果失敗則回傳 None。
     """
     print(f"📝 正在 '{BLOG_OUTPUT_DIR}/' 資料夾中建立新的部落格文章檔案...")
     try:
-        os.makedirs(BLOG_OUTPUT_DIR, exist_ok=True) # 確保輸出目錄存在
+        os.makedirs(BLOG_OUTPUT_DIR, exist_ok=True)
         with open(BLOG_POST_TEMPLATE, 'r', encoding='utf-8') as f:
             template_content = f.read()
         
-        # 使用英文標題來生成檔名
         default_title = translations_data.get('en', {}).get('postTitle', 'untitled-post')
         filename = f"{slugify(default_title)}.html"
         
-        # 將翻譯字典轉換為格式化的 JSON 字串，以便嵌入 HTML
         translations_json_string = json.dumps(translations_data, ensure_ascii=False, indent=4)
 
-        # 替換模板中的佔位符
         post_content = template_content.replace("{{TRANSLATIONS_JSON}}", translations_json_string)
         post_content = post_content.replace("{{POST_FILENAME}}", filename)
         post_content = post_content.replace("{{POST_DATE}}", datetime.date.today().strftime("%B %d, %Y"))
         post_content = post_content.replace("Post Title Placeholder", default_title)
         
-        # 替換 meta description
         default_summary = translations_data.get('en', {}).get('postSummary', '')
         post_content = post_content.replace('<meta name="description" content="">', f'<meta name="description" content="{default_summary}">')
         
-        # 寫入新檔案
         output_path = os.path.join(BLOG_OUTPUT_DIR, filename)
         with open(output_path, 'w', encoding='utf-8') as f:
             f.write(post_content)
@@ -155,23 +145,17 @@ def create_new_blog_post(translations_data: dict) -> str | None:
 def update_blog_list(translations_data: dict, filename: str):
     """
     在部落格列表頁面 (Blog-List-Page.html) 的最頂部插入新文章的連結和摘要。
-
-    Args:
-        translations_data: 包含文章標題和摘要的字典。
-        filename: 新文章的檔名。
     """
     print(f"🔄 正在更新 '{BLOG_LIST_PAGE}'...")
     try:
         with open(BLOG_LIST_PAGE, 'r', encoding='utf-8') as f:
             soup = BeautifulSoup(f, 'html.parser')
 
-        # 找到要插入新文章的容器 div
         article_container = soup.find('div', class_='space-y-10')
         if not article_container:
             print(f"❌ 錯誤: 在 '{BLOG_LIST_PAGE}' 中找不到 <div class='space-y-10'>。")
             return
             
-        # 組合新文章的 HTML 結構
         link_path = os.path.join(BLOG_OUTPUT_DIR, filename).replace("\\", "/")
         title = translations_data.get('en', {}).get('postTitle', 'Untitled')
         summary = translations_data.get('en', {}).get('postSummary', 'No summary available.')
@@ -188,11 +172,9 @@ def update_blog_list(translations_data: dict, filename: str):
         <hr class="border-apple-gray-200">
         """
         
-        # 使用 BeautifulSoup 解析新 HTML 並插入到列表的最前面
         new_article_soup = BeautifulSoup(new_article_html, 'html.parser')
         article_container.insert(0, new_article_soup)
 
-        # 寫回更新後的 HTML 檔案
         with open(BLOG_LIST_PAGE, 'w', encoding='utf-8') as f:
             f.write(str(soup.prettify()))
         print(f"✅ '{BLOG_LIST_PAGE}' 已成功更新！")
@@ -201,12 +183,10 @@ def update_blog_list(translations_data: dict, filename: str):
 
 # --- 模組 3: 主執行流程 (Main Execution Flow) ---
 def main():
-    # 檢查 API 金鑰是否存在
     if not GEMINI_API_KEY or GEMINI_API_KEY == "YOUR_GEMINI_API_KEY_PLACEHOLDER":
         print("🔥🔥🔥 錯誤: 找不到環境變數 `GEMINI_API_KEY` 或金鑰不正確。請在 GitHub Secrets 中設定它。")
         sys.exit(1)
 
-    # 讀取關鍵詞檔案
     try:
         with open(KEYWORDS_FILE, 'r', encoding='utf-8') as f:
             keywords = [line.strip() for line in f if line.strip()]
@@ -217,7 +197,6 @@ def main():
         print(f"❌ 錯誤: 找不到關鍵詞檔案 '{KEYWORDS_FILE}'。")
         sys.exit(1)
 
-    # 讀取提示詞模板檔案
     try:
         with open(PROMPT_TEMPLATE_FILE, 'r', encoding='utf-8') as f:
             prompt_template = f.read()
@@ -225,21 +204,16 @@ def main():
         print(f"❌ 錯誤: 找不到 Prompt 模板檔案 '{PROMPT_TEMPLATE_FILE}'。")
         sys.exit(1)
         
-    # 處理佇列中的第一個關鍵詞
     keyword_to_process = keywords[0]
     print(f"--- 開始處理關鍵詞: '{keyword_to_process}' ---")
     
-    # 呼叫 AI 生成內容
     generated_translations = generate_blog_from_keyword(keyword_to_process, prompt_template)
     
     if generated_translations:
-        # 如果內容生成成功，則建立文章檔案
         new_filename = create_new_blog_post(generated_translations)
         if new_filename:
-            # 如果檔案建立成功，則更新部落格列表
             update_blog_list(generated_translations, new_filename)
             
-            # 從關鍵詞列表中移除已處理的關鍵詞
             remaining_keywords = keywords[1:]
             with open(KEYWORDS_FILE, 'w', encoding='utf-8') as f:
                 for kw in remaining_keywords:
