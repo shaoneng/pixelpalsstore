@@ -56,7 +56,6 @@ def generate_blog_from_keyword(keyword: str, prompt_template: str) -> dict | Non
                 # 使用強型別的 GenerationConfig，並強制 JSON 輸出與設定 token 上限
                 generation_config=genai.GenerationConfig(
                     response_mime_type="application/json",
-                    max_tokens=8192, 
                 )
             )
 
