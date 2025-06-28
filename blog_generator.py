@@ -32,15 +32,6 @@ def _strip_keys(obj):
         return [_strip_keys(i) for i in obj]
     return obj
 
-def _extract_json(text: str) -> str | None:
-    """
-    從一段可能包含前後文的純文字中，提取出 JSON 字串。
-    AI 的回覆有時會在 JSON 結構外層包上 markdown 標籤 (```json ... ```)，此函式可應對此情況。
-    """
-    # re.DOTALL (或 re.S) 讓 '.' 可以匹配包含換行符在內的任何字元
-    match = re.search(r'\{[\s\S]*\}', text)
-    return match.group(0) if match else None
-
 def generate_blog_from_keyword(keyword: str, prompt_template: str) -> dict | None:
     """
     根據給定的關鍵詞和提示詞模板，呼叫 Gemini API 來生成部落格文章內容。
@@ -55,7 +46,7 @@ def generate_blog_from_keyword(keyword: str, prompt_template: str) -> dict | Non
     max_retries, retry_delay = 3, 5  # 設定重試次數和延遲時間
     for attempt in range(1, max_retries + 1):
         print(f"🤖 正在呼叫 Gemini API... (第 {attempt}/{max_retries} 次嘗試)")
-        raw_text = f"錯誤: 在第 {attempt} 次嘗試中，未能從 API 捕獲有效的回應文本。"
+        raw_text_for_debugging = f"錯誤: 在第 {attempt} 次嘗試中，API 呼叫未成功返回任何內容。"
         try:
             # 步驟 1: 檢查並設定 API 金鑰
             if not GEMINI_API_KEY:
@@ -63,39 +54,32 @@ def generate_blog_from_keyword(keyword: str, prompt_template: str) -> dict | Non
             
             genai.configure(api_key=GEMINI_API_KEY)
             
-            # 步驟 2: 初始化模型
-            # 使用 'gemini-2.5-flash' 模型，並關閉所有安全過濾以確保內容能順利生成
+            # [修正 1] 使用正確的模型名稱 'gemini-2.5-flash'
+            # [修正 2] 加入 generation_config 以強制要求 JSON 輸出
             model = genai.GenerativeModel(
-                model_name="gemini-2.5-flash", 
+                model_name="gemini-2.5-pro", 
                 safety_settings={c: "BLOCK_NONE" for c in (
                     "HARM_CATEGORY_HARASSMENT",
                     "HARM_CATEGORY_HATE_SPEECH",
                     "HARM_CATEGORY_SEXUALLY_EXPLICIT",
                     "HARM_CATEGORY_DANGEROUS_CONTENT",
-                )}
+                )},
+                generation_config={"response_mime_type": "application/json"}
             )
 
             # 步驟 3: 生成並發送提示
             prompt = prompt_template.format(keyword=keyword)
             response = model.generate_content(prompt)
+            
+            # 步驟 4: 直接解析 JSON 回應
+            # [修正 3] 因為已要求 JSON 格式，所以直接使用 response.text
+            raw_text_for_debugging = response.text
+            article_data = json.loads(raw_text_for_debugging)
+            
+            # 雖然要求了 JSON，但作為保險措施，還是清理一下 key
+            article_data = _strip_keys(article_data)
 
-            # 步驟 4: 從回應中提取純文字
-            raw_text = getattr(response, "text", None)
-            if raw_text is None and response.candidates:
-                # 兼容新版 SDK 的備用方案
-                raw_text = response.candidates[0].content.parts[0].text
-
-            if not raw_text:
-                 raise ValueError("從 API 回應中無法提取任何文本內容。")
-
-            # 步驟 5: 提取並解析 JSON
-            json_str = _extract_json(raw_text)
-            if not json_str:
-                raise ValueError("API 回傳的內容中未檢測到有效的 JSON 結構。")
-
-            article_data = _strip_keys(json.loads(json_str))
-
-            # 步驟 6: 驗證 JSON 的基本結構
+            # 步驟 5: 驗證 JSON 的基本結構
             if "en" not in article_data or "postTitle" not in article_data.get("en", {}):
                 raise KeyError("JSON 缺少 'en.postTitle' 鍵，請檢查 prompt 或 API 回傳內容。")
 
@@ -105,7 +89,8 @@ def generate_blog_from_keyword(keyword: str, prompt_template: str) -> dict | Non
         except Exception as e:
             print(f"🚨 嘗試 {attempt} 失敗：{repr(e)}")
             print("==== API 原始回應內容 (供除錯參考) ====")
-            print(raw_text)
+            # [修正 4] 確保打印出從 API 捕獲的實際文本，以便除錯
+            print(raw_text_for_debugging)
             print("====================================")
             if attempt < max_retries:
                 print(f"將在 {retry_delay} 秒後重試…\n")
@@ -221,7 +206,7 @@ def update_blog_list(translations_data: dict, filename: str):
 def main():
     # 檢查 API 金鑰是否存在
     if not GEMINI_API_KEY or GEMINI_API_KEY == "YOUR_GEMINI_API_KEY_PLACEHOLDER":
-        print("🔥🔥 錯誤: 找不到環境變數 `GEMINI_API_KEY` 或金鑰不正確。請在 GitHub Secrets 中設定它。")
+        print("🔥🔥🔥 錯誤: 找不到環境變數 `GEMINI_API_KEY` 或金鑰不正確。請在 GitHub Secrets 中設定它。")
         sys.exit(1)
 
     # 讀取關鍵詞檔案
@@ -271,4 +256,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
