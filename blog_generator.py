@@ -204,7 +204,7 @@ def update_blog_list(translations_data: dict, filename: str):
             <a href="{link_path}" class="inline-block mt-4 font-semibold text-apple-blue-500 hover:text-apple-blue-600">Read More &rarr;</a>
         </article>
         <hr class="border-apple-gray-200">
-        
+        """
         
         # 使用 BeautifulSoup 解析新 HTML 並插入到列表的最前面
         new_article_soup = BeautifulSoup(new_article_html, 'html.parser')
