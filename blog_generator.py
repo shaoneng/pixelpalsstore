@@ -142,43 +142,81 @@ def create_new_blog_post(translations_data: dict) -> str | None:
         return None
 
 def update_blog_list(translations_data: dict, filename: str):
-    """
-    在部落格列表頁面 (Blog-List-Page.html) 的最頂部插入新文章的連結和摘要。
-    """
     print(f"🔄 正在更新 '{BLOG_LIST_PAGE}'...")
     try:
         with open(BLOG_LIST_PAGE, 'r', encoding='utf-8') as f:
-            soup = BeautifulSoup(f, 'html.parser')
+            html_content = f.read()
 
+        soup = BeautifulSoup(html_content, 'html.parser')
         article_container = soup.find('div', class_='space-y-10')
         if not article_container:
             print(f"❌ 錯誤: 在 '{BLOG_LIST_PAGE}' 中找不到 <div class='space-y-10'>。")
             return
-            
-        link_path = os.path.join(BLOG_OUTPUT_DIR, filename).replace("\\", "/")
-        title = translations_data.get('en', {}).get('postTitle', 'Untitled')
-        summary = translations_data.get('en', {}).get('postSummary', 'No summary available.')
+
+        # 1. 尋找包含翻譯物件的 <script> 標籤
+        script_tag = soup.find("script", string=re.compile(r"\s*const\s+translations\s*="))
+        if not script_tag:
+            print(f"❌ 錯誤: 在 '{BLOG_LIST_PAGE}' 中找不到 'const translations' script 區塊。")
+            return
+
+        script_text = script_tag.string
         
+        # 2. 精準地從 script 內容中提取 JSON 物件字串和後續的函式程式碼
+        match = re.search(r'(const\s+translations\s*=\s*)(\{[\s\S]*?\});([\s\S]*)', script_text, re.DOTALL)
+        if not match:
+             print(f"❌ 錯誤: 無法從 script 區塊中完整地解析出 translations 物件和函式。")
+             return
+        
+        # 分別獲取 JSON 字串和其後的 JavaScript 函式部分
+        json_part_str = match.group(2)
+        functions_part_str = match.group(3)
+        
+        # 將 JSON 字串解析為 Python 字典
+        translations_obj = json.loads(json_part_str)
+
+        # 3. 為新文章產生唯一的 slug，並將所有語言的翻譯加入到字典中
+        post_slug = slugify(translations_data['en']['postTitle'])
+        for lang, data in translations_data.items():
+            if lang not in translations_obj:
+                translations_obj[lang] = {}
+            translations_obj[lang][f"postTitle_{post_slug}"] = data.get('postTitle', '')
+            translations_obj[lang][f"postSummary_{post_slug}"] = data.get('postSummary', '')
+
+        # 4. 建立新文章的 HTML 區塊，並使用 data-translate-key 屬性來標示
+        link_path = os.path.join(BLOG_OUTPUT_DIR, filename).replace("\\", "/")
         new_article_html = f"""
         <article>
             <h2 class="text-2xl sm:text-3xl font-bold text-apple-gray-800 mb-2">
-                <a href="{link_path}" class="hover:text-apple-blue-500 transition-colors">{title}</a>
+                <a href="{link_path}" class="hover:text-apple-blue-500 transition-colors" data-translate-key="postTitle_{post_slug}"></a>
             </h2>
-            <p class="text-sm text-apple-gray-500 mb-4">By AI Assistant | {datetime.date.today().strftime("%B %d, %Y")}</p>
-            <p class="text-base leading-relaxed text-apple-gray-600">{summary}</p>
-            <a href="{link_path}" class="inline-block mt-4 font-semibold text-apple-blue-500 hover:text-apple-blue-600">Read More &rarr;</a>
+            <p class="text-sm text-apple-gray-500 mb-4"><span data-translate-key="by">By</span> AI Assistant | {datetime.date.today().strftime("%B %d, %Y")}</p>
+            <p class="text-base leading-relaxed text-apple-gray-600" data-translate-key="postSummary_{post_slug}"></p>
+            <a href="{link_path}" data-translate-key="readMore" class="inline-block mt-4 font-semibold text-apple-blue-500 hover:text-apple-blue-600">Read More &rarr;</a>
         </article>
-        <hr class="border-apple-gray-200">
+        <hr class="border-apple-gray-200"/>
         """
-        
         new_article_soup = BeautifulSoup(new_article_html, 'html.parser')
         article_container.insert(0, new_article_soup)
 
+        # 5. [核心修正] 重新組合一個完整的、全新的 <script> 內容
+        # 將更新後的 Python 字典轉回 JSON 字串
+        new_translations_str = json.dumps(translations_obj, ensure_ascii=False, indent=4)
+        # 組合出 `const translations = ...;` 這部分，並接上先前保存的函式程式碼
+        full_new_script_content = f"const translations = {new_translations_str};" + functions_part_str
+        
+        # 直接替換整個 <script> 標籤的內容
+        script_tag.string = full_new_script_content
+
+        # 6. 將更新後的 soup 物件寫回 HTML 檔案
         with open(BLOG_LIST_PAGE, 'w', encoding='utf-8') as f:
-            f.write(str(soup.prettify()))
+            f.write(str(soup.prettify(formatter="html5")))
         print(f"✅ '{BLOG_LIST_PAGE}' 已成功更新！")
+
     except Exception as e:
+        # 提供更詳細的錯誤追蹤
+        import traceback
         print(f"❌ 更新列表頁面時發生錯誤: {repr(e)}")
+        traceback.print_exc()
 
 # --- 模組 3: 主執行流程 (Main Execution Flow) ---
 def main():
