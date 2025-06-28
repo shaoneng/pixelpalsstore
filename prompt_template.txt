@@ -28,52 +28,32 @@
 ---
 
 # [輸出格式要求]
-請**嚴格**按照以下巢狀 JSON 格式輸出，不要在 JSON 區塊之外添加任何文字、註解或 ```json 標記。所有欄位都必須被填寫。
+您的回覆**必須**只包含一個 JSON 物件，其結構如下所示。請勿在 JSON 物件之外添加任何文字、註解、說明或 ```json 標記。所有欄位都必須被填寫，特別是 `postContent` 必須是完整的 HTML 內容。
 
 {
   "en": {
-    "navBlog": "Blog",
-    "by": "By",
-    "backToBlog": "&larr; Back to Blog",
-    "footer": "&copy; 2025 Your Website Name. All Rights Reserved.",
     "postTitle": "An engaging, keyword-rich title in English based on '{keyword}'",
     "postSummary": "A compelling summary of about 150-160 characters in English. It should be optimized for SEO and naturally include the keyword.",
     "postContent": "\n<h3>Subtitle 1 Related to Keyword</h3>\n<p>First paragraph introducing the topic...</p>\n<p>More details go here...</p>\n<h3>Subtitle 2 Related to Keyword</h3>\n<p>Exploring another aspect of the topic...</p>\n<ul>\n<li>Point 1</li>\n<li>Point 2</li>\n</ul>\n<h3>A Call to Action</h3>\n<p>Final paragraph summarizing the key takeaways and encouraging the reader. Remember to add a disclaimer to consult a professional.</p>"
   },
   "zh-TW": {
-    "navBlog": "部落格",
-    "by": "作者：",
-    "backToBlog": "&larr; 返回部落格",
-    "footer": "&copy; 2025 您的網站名稱. 版權所有.",
     "postTitle": "一個吸引人且包含繁體中文關鍵詞的標題",
     "postSummary": "一段約 150 字元，為 SEO 優化且包含關鍵詞的繁體中文簡短摘要。",
-    "postContent": ""
+    "postContent": "<!-- 繁體中文的完整 HTML 內容 -->"
   },
   "es": {
-    "navBlog": "Blog",
-    "by": "Por",
-    "backToBlog": "&larr; Volver al Blog",
-    "footer": "&copy; 2025 Su Nombre de Sitio Web. Todos los derechos reservados.",
     "postTitle": "Un título atractivo y rico en palabras clave en español",
     "postSummary": "Un breve resumen de unos 150 caracteres en español, optimizado para SEO.",
-    "postContent": ""
+    "postContent": "<!-- El contenido HTML completo en español -->"
   },
   "fr": {
-    "navBlog": "Blog",
-    "by": "Par",
-    "backToBlog": "&larr; Retour au Blog",
-    "footer": "&copy; 2025 Votre Nom de Site Web. Tous droits réservés.",
     "postTitle": "Un titre engageant et riche en mots-clés en français",
     "postSummary": "Un bref résumé d'environ 150 caractères en français, optimisé pour le SEO.",
-    "postContent": ""
+    "postContent": "<!-- Le contenu HTML complet en français -->"
   },
   "ru": {
-    "navBlog": "Блог",
-    "by": "Автор:",
-    "backToBlog": "&larr; Назад в блог",
-    "footer": "&copy; 2025 Название Вашего Сайта. Все права защищены.",
     "postTitle": "Привлекательный, насыщенный ключевыми словами заголовок на русском языке",
     "postSummary": "Краткое резюме около 150 символов на русском языке, оптимизированное для SEO.",
-    "postContent": ""
+    "postContent": "<!-- Полное HTML-содержимое на русском языке -->"
   }
 }
