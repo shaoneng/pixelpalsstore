@@ -42,7 +42,7 @@ def generate_blog_from_keyword(keyword: str, prompt_template: str) -> dict | Non
             
             # 步驟 3: 初始化模型，採用新版 SDK 語法和更穩定的設定
             model = genai.GenerativeModel(
-                model_name="gemini-1.5-pro-latest",
+                model_name="gemini-2.5-pro",
                 # 新版 SDK 推薦使用 list of dicts 格式
                 safety_settings=[
                     {"category": c, "threshold": "BLOCK_NONE"}
