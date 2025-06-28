@@ -6,6 +6,10 @@ on:
   # workflow_dispatch 允許您在 GitHub 頁面上手動點擊按鈕來執行此工作流程
   workflow_dispatch:
 
+# [修正] 新增權限設定，授予工作流程寫入儲存庫內容的權限
+permissions:
+  contents: write
+
 # 定義工作內容
 jobs:
   build-and-deploy:
