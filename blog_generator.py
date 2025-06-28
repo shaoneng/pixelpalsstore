@@ -26,8 +26,8 @@ def generate_blog_from_keyword(keyword: str, prompt_template: str) -> dict | Non
     根據給定的關鍵詞和提示詞模板，呼叫 Gemini API 來生成部落格文章內容。
     此版本進行了多項優化，以提高穩定性和除錯效率。
     """
-    # 步驟 1: 構建一個更嚴格的提示詞，強制模型輸出乾淨的 JSON
-    prompt = prompt_template.format(keyword=keyword).strip()
+    # [修正] 使用 .replace() 而不是 .format() 來避免與模板中的 JSON 範例產生衝突
+    prompt = prompt_template.replace("{keyword}", keyword).strip()
 
     max_retries, retry_delay = 3, 5
     for attempt in range(1, max_retries + 1):
@@ -42,7 +42,7 @@ def generate_blog_from_keyword(keyword: str, prompt_template: str) -> dict | Non
             
             # 步驟 3: 初始化模型，採用新版 SDK 語法和更穩定的設定
             model = genai.GenerativeModel(
-                model_name="gemini-2.5-pro",
+                model_name="gemini-1.5-pro-latest",
                 # 新版 SDK 推薦使用 list of dicts 格式
                 safety_settings=[
                     {"category": c, "threshold": "BLOCK_NONE"}
