@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- SEO Essentials -->
-    <title>Health & Fitness Blog | Weight-Loss Calc</title>
-    <meta name="description" content="Explore tips, guides, and stories on weight loss, nutrition, and healthy living from the Weight-Loss Calc team.">
-    <link rel="canonical" href="https://pixelpals.store/Blog-List-Page">
-    
-    <!-- Favicon -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📉</text></svg>">
-
-    <!-- Tailwind CSS via CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <!-- SEO Essentials -->
+  <title>
+   Health &amp; Fitness Blog | Weight-Loss Calc
+  </title>
+  <meta content="Explore tips, guides, and stories on weight loss, nutrition, and healthy living from the Weight-Loss Calc team." name="description"/>
+  <link href="https://pixelpals.store/Blog-List-Page" rel="canonical"/>
+  <!-- Favicon -->
+  <link href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text y=%22.9em%22 font-size=%2290%22&gt;📉&lt;/text&gt;&lt;/svg&gt;" rel="icon"/>
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <script>
+   tailwind.config = {
             theme: {
                 extend: {
                     colors: {
@@ -25,108 +25,154 @@
                 }
             }
         }
-    </script>
-
-    <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  </script>
+  <style>
+   body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
         select:focus { outline: 2px solid #007aff60; outline-offset: 2px; }
         .lang-select-container::before { content: '🌐'; display: inline-block; margin-right: 0.5rem; vertical-align: middle; }
-    </style>
-
-</head>
-<body class="bg-apple-gray-50 text-apple-gray-700">
-    
-    <!-- Navigation Bar (Same as main page) -->
-    <nav class="bg-white/80 backdrop-blur-sm shadow-sm sticky top-0 z-50">
-    <div class="container mx-auto max-w-5xl px-4">
-        <div class="flex items-center justify-between h-16">
-            <div class="flex-shrink-0">
-                <a href="index.html" class="text-xl font-bold text-apple-gray-800" aria-label="Homepage">
-                    📉 Weight-Loss Calc
-                </a>
-            </div>
-
-            <div class="flex items-center space-x-4">
-                <a href="Blog-List-Page.html" data-translate-key="navBlog" class="text-sm font-semibold text-apple-blue-500" aria-current="page">Blog</a>
-                <div class="lang-select-container">
-                    <select id="language-selector" onchange="setLanguage(this.value)" class="bg-transparent border-0 rounded-md py-1 pl-2 pr-8 text-sm focus:outline-none focus:ring-0">
-                        <option value="en">English</option>
-                        <option value="zh-TW">繁體中文</option>
-                        <option value="es">Español</option>
-                        <option value="fr">Français</option>
-                        <option value="ru">Русский</option>
-                    </select>
-                </div>
-            </div>
-        </div>
+  </style>
+ </head>
+ <body class="bg-apple-gray-50 text-apple-gray-700">
+  <!-- Navigation Bar (Same as main page) -->
+  <nav class="bg-white/80 backdrop-blur-sm shadow-sm sticky top-0 z-50">
+   <div class="container mx-auto max-w-5xl px-4">
+    <div class="flex items-center justify-between h-16">
+     <div class="flex-shrink-0">
+      <a aria-label="Homepage" class="text-xl font-bold text-apple-gray-800" href="index.html">
+       📉 Weight-Loss Calc
+      </a>
+     </div>
+     <div class="flex items-center space-x-4">
+      <a aria-current="page" class="text-sm font-semibold text-apple-blue-500" data-translate-key="navBlog" href="Blog-List-Page.html">
+       Blog
+      </a>
+      <div class="lang-select-container">
+       <select class="bg-transparent border-0 rounded-md py-1 pl-2 pr-8 text-sm focus:outline-none focus:ring-0" id="language-selector" onchange="setLanguage(this.value)">
+        <option value="en">
+         English
+        </option>
+        <option value="zh-TW">
+         繁體中文
+        </option>
+        <option value="es">
+         Español
+        </option>
+        <option value="fr">
+         Français
+        </option>
+        <option value="ru">
+         Русский
+        </option>
+       </select>
+      </div>
+     </div>
     </div>
-</nav>
-
-    <!-- Main Content -->
-    <main class="container mx-auto max-w-3xl px-4 py-8 sm:py-12">
-        
-        <!-- Page Header -->
-        <header class="text-center mb-12">
-            <h1 data-translate-key="pageTitle" class="text-4xl sm:text-5xl font-bold text-apple-gray-900 tracking-tight">Health & Fitness Blog</h1>
-            <p data-translate-key="pageSubtitle" class="mt-4 text-lg text-apple-gray-600">Your guide to a healthier, more active lifestyle.</p>
-        </header>
-
-        <!-- Blog Post List -->
-        <div class="space-y-10">
-            
-            <!-- Blog Post Entry 1 -->
-            <article>
-                <h2 class="text-2xl sm:text-3xl font-bold text-apple-gray-800 mb-2">
-                    <a href="blog-post-1.html" data-translate-key="post1Title" class="hover:text-apple-blue-500 transition-colors">5 Common Weight Loss Myths Debunked</a>
-                </h2>
-                <p class="text-sm text-apple-gray-500 mb-4"><span data-translate-key="by">By</span> Jane Doe | June 26, 2025</p>
-                <p data-translate-key="post1Summary" class="text-base leading-relaxed text-apple-gray-600">
-                    Navigating the world of weight loss can be confusing with so much conflicting information. We're here to clear up some of the most persistent myths, from "carbs make you fat" to "you must do hours of cardio"...
-                </p>
-                <a href="./blog/blog-post-1.html" data-translate-key="readMore" class="inline-block mt-4 font-semibold text-apple-blue-500 hover:text-apple-blue-600">Read More &rarr;</a>
-            </article>
-
-            <hr class="border-apple-gray-200">
-
-            <!-- Blog Post Entry 2 -->
-            <article>
-                <h2 class="text-2xl sm:text-3xl font-bold text-apple-gray-800 mb-2">
-                    <a href="#" data-translate-key="post2Title" class="hover:text-apple-blue-500 transition-colors">How to Calculate Your Calorie Needs for Sustainable Weight Loss</a>
-                </h2>
-                <p class="text-sm text-apple-gray-500 mb-4"><span data-translate-key="by">By</span> John Smith | June 20, 2025</p>
-                <p data-translate-key="post2Summary" class="text-base leading-relaxed text-apple-gray-600">
-                    Understanding your Total Daily Energy Expenditure (TDEE) is the first step toward creating a calorie deficit that works for you. This guide will walk you through the simple steps to estimate your needs...
-                </p>
-                <a href="#" data-translate-key="readMore" class="inline-block mt-4 font-semibold text-apple-blue-500 hover:text-apple-blue-600">Read More &rarr;</a>
-            </article>
-
-            <hr class="border-apple-gray-200">
-
-            <!-- Blog Post Entry 3 -->
-            <article>
-                <h2 class="text-2xl sm:text-3xl font-bold text-apple-gray-800 mb-2">
-                    <a href="#" data-translate-key="post3Title" class="hover:text-apple-blue-500 transition-colors">The Importance of Strength Training in Your Fitness Journey</a>
-                </h2>
-                <p class="text-sm text-apple-gray-500 mb-4"><span data-translate-key="by">By</span> Emily White | June 15, 2025</p>
-                <p data-translate-key="post3Summary" class="text-base leading-relaxed text-apple-gray-600">
-                    While cardio is great for your heart, strength training is crucial for building muscle, boosting metabolism, and creating a toned physique. Discover why lifting weights is for everyone, not just bodybuilders...
-                </p>
-                <a href="#" data-translate-key="readMore" class="inline-block mt-4 font-semibold text-apple-blue-500 hover:text-apple-blue-600">Read More &rarr;</a>
-            </article>
-
-        </div>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="text-center mt-12 py-8 border-t border-apple-gray-200 bg-white">
-        <div class="container mx-auto max-w-3xl px-4">
-             <p data-translate-key="footer" class="text-sm text-apple-gray-500">&copy; 2025 Your Website Name. All Rights Reserved.</p>
-        </div>
-    </footer>
-
-    <script>
-    const translations = {
+   </div>
+  </nav>
+  <!-- Main Content -->
+  <main class="container mx-auto max-w-3xl px-4 py-8 sm:py-12">
+   <!-- Page Header -->
+   <header class="text-center mb-12">
+    <h1 class="text-4xl sm:text-5xl font-bold text-apple-gray-900 tracking-tight" data-translate-key="pageTitle">
+     Health &amp; Fitness Blog
+    </h1>
+    <p class="mt-4 text-lg text-apple-gray-600" data-translate-key="pageSubtitle">
+     Your guide to a healthier, more active lifestyle.
+    </p>
+   </header>
+   <!-- Blog Post List -->
+   <div class="space-y-10">
+    <article>
+     <h2 class="text-2xl sm:text-3xl font-bold text-apple-gray-800 mb-2">
+      <a class="hover:text-apple-blue-500 transition-colors" href="blog/unlock-your-goals-the-proven-benefits-of-intermittent-fasting-for-weight-loss.html">
+       Unlock Your Goals: The Proven Benefits of Intermittent Fasting for Weight Loss
+      </a>
+     </h2>
+     <p class="text-sm text-apple-gray-500 mb-4">
+      By AI Assistant | June 28, 2025
+     </p>
+     <p class="text-base leading-relaxed text-apple-gray-600">
+      Explore the powerful benefits of intermittent fasting for weight loss. Learn how this eating pattern helps burn fat, boost metabolism, and improve your health.
+     </p>
+     <a class="inline-block mt-4 font-semibold text-apple-blue-500 hover:text-apple-blue-600" href="blog/unlock-your-goals-the-proven-benefits-of-intermittent-fasting-for-weight-loss.html">
+      Read More →
+     </a>
+    </article>
+    <hr class="border-apple-gray-200"/>
+    <!-- Blog Post Entry 1 -->
+    <article>
+     <h2 class="text-2xl sm:text-3xl font-bold text-apple-gray-800 mb-2">
+      <a class="hover:text-apple-blue-500 transition-colors" data-translate-key="post1Title" href="blog-post-1.html">
+       5 Common Weight Loss Myths Debunked
+      </a>
+     </h2>
+     <p class="text-sm text-apple-gray-500 mb-4">
+      <span data-translate-key="by">
+       By
+      </span>
+      Jane Doe | June 26, 2025
+     </p>
+     <p class="text-base leading-relaxed text-apple-gray-600" data-translate-key="post1Summary">
+      Navigating the world of weight loss can be confusing with so much conflicting information. We're here to clear up some of the most persistent myths, from "carbs make you fat" to "you must do hours of cardio"...
+     </p>
+     <a class="inline-block mt-4 font-semibold text-apple-blue-500 hover:text-apple-blue-600" data-translate-key="readMore" href="./blog/blog-post-1.html">
+      Read More →
+     </a>
+    </article>
+    <hr class="border-apple-gray-200"/>
+    <!-- Blog Post Entry 2 -->
+    <article>
+     <h2 class="text-2xl sm:text-3xl font-bold text-apple-gray-800 mb-2">
+      <a class="hover:text-apple-blue-500 transition-colors" data-translate-key="post2Title" href="#">
+       How to Calculate Your Calorie Needs for Sustainable Weight Loss
+      </a>
+     </h2>
+     <p class="text-sm text-apple-gray-500 mb-4">
+      <span data-translate-key="by">
+       By
+      </span>
+      John Smith | June 20, 2025
+     </p>
+     <p class="text-base leading-relaxed text-apple-gray-600" data-translate-key="post2Summary">
+      Understanding your Total Daily Energy Expenditure (TDEE) is the first step toward creating a calorie deficit that works for you. This guide will walk you through the simple steps to estimate your needs...
+     </p>
+     <a class="inline-block mt-4 font-semibold text-apple-blue-500 hover:text-apple-blue-600" data-translate-key="readMore" href="#">
+      Read More →
+     </a>
+    </article>
+    <hr class="border-apple-gray-200"/>
+    <!-- Blog Post Entry 3 -->
+    <article>
+     <h2 class="text-2xl sm:text-3xl font-bold text-apple-gray-800 mb-2">
+      <a class="hover:text-apple-blue-500 transition-colors" data-translate-key="post3Title" href="#">
+       The Importance of Strength Training in Your Fitness Journey
+      </a>
+     </h2>
+     <p class="text-sm text-apple-gray-500 mb-4">
+      <span data-translate-key="by">
+       By
+      </span>
+      Emily White | June 15, 2025
+     </p>
+     <p class="text-base leading-relaxed text-apple-gray-600" data-translate-key="post3Summary">
+      While cardio is great for your heart, strength training is crucial for building muscle, boosting metabolism, and creating a toned physique. Discover why lifting weights is for everyone, not just bodybuilders...
+     </p>
+     <a class="inline-block mt-4 font-semibold text-apple-blue-500 hover:text-apple-blue-600" data-translate-key="readMore" href="#">
+      Read More →
+     </a>
+    </article>
+   </div>
+  </main>
+  <!-- Footer -->
+  <footer class="text-center mt-12 py-8 border-t border-apple-gray-200 bg-white">
+   <div class="container mx-auto max-w-3xl px-4">
+    <p class="text-sm text-apple-gray-500" data-translate-key="footer">
+     © 2025 Your Website Name. All Rights Reserved.
+    </p>
+   </div>
+  </footer>
+  <script>
+   const translations = {
         'en': {
             navBlog: 'Blog',
             pageTitle: 'Health & Fitness Blog',
@@ -266,6 +312,6 @@
         document.getElementById('language-selector').value = initialLang;
         setLanguage(initialLang);
     });
-</script>
-</body>
+  </script>
+ </body>
 </html>
